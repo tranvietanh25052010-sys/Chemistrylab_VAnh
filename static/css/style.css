@@ -1,5 +1,5 @@
 /* ===========================================
-   BIẾN MÀU & CHẾ ĐỘ SÁNG/TỐI - TƯƠNG PHẢN TỐI ĐA
+   BIẾN MÀU - CHẾ ĐỘ TỐI DỊU MẮT, TƯƠNG PHẢN CAO
 =========================================== */
 :root {
     --primary: #2563eb;
@@ -10,7 +10,6 @@
     --danger: #ef4444;
     --warning: #f59e0b;
 
-    /* CHẾ ĐỘ SÁNG */
     --bg-main: #eef4ff;
     --bg-card: #ffffff;
     --bg-soft: #f8fafc;
@@ -22,46 +21,39 @@
     --shadow-soft: 0 10px 30px rgba(0,0,0,.08);
 }
 
-/* CHẾ ĐỘ TỐI: NÊN XÁM ĐẬM DỊU MẮT, CHỮ TRẮNG SÁNG */
 [data-theme="dark"] {
     --primary: #3b82f6;
-    --primary-light: #27374d; /* Xám đậm nhẹ nhàng chứ không đen tuyền */
+    --primary-light: #27374d;
     --primary-dark: #60a5fa;
     --accent: #fbbf24;
     --success: #22c55e;
     --danger: #f87171;
     --warning: #fcd34d;
 
-    --bg-main: #1b2430; /* Nền tổng thể xám đậm dễ nhìn */
-    --bg-card: #27374d; /* Ô câu hỏi nhạt hơn nền một chút */
-    --bg-soft: #33475b; /* Ô đáp án nhạt hơn nữa */
-    --text-main: #f8fafc; /* Trắng sáng không bị ngả xám */
+    --bg-main: #1b2430;
+    --bg-card: #27374d;
+    --bg-soft: #33475b;
+    --text-main: #ffffff;
     --text-soft: #e2e8f0;
     --text-muted: #cbd5e1;
-    --border: #4a607a; /* Viền nổi rõ hơn */
+    --border: #4a607a;
     --shadow: 0 5px 15px rgba(0,0,0,.35);
     --shadow-soft: 0 10px 30px rgba(0,0,0,.25);
 }
+
 /* ===========================================
-   RESET
+   RESET CHUNG
 =========================================== */
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
     font-family:'Poppins',sans-serif;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    background:var(--bg-main);
-    color:var(--text-main);
-    line-height:1.6;
-}
+html{ scroll-behavior:smooth; }
+body{ background:var(--bg-main); color:var(--text-main); line-height:1.6; }
 
 /* ===========================================
    NAVBAR
@@ -81,35 +73,11 @@ nav{
     box-shadow:var(--shadow);
 }
 
-.logo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:28px;
-    font-weight:700;
-}
-
-.logo i{
-    font-size:34px;
-}
-
-nav ul{
-    display:flex;
-    list-style:none;
-    gap:28px;
-    padding-right:150px;
-}
-
-nav ul li a{
-    color:white;
-    text-decoration:none;
-    font-weight:500;
-    transition:.3s;
-}
-
-nav ul li a:hover{
-    color:var(--accent);
-}
+.logo{ display:flex; align-items:center; gap:10px; font-size:28px; font-weight:700; }
+.logo i{ font-size:34px; }
+nav ul{ display:flex; list-style:none; gap:28px; padding-right:150px; }
+nav ul li a{ color:white; text-decoration:none; font-weight:500; transition:.3s; }
+nav ul li a:hover{ color:var(--accent); }
 
 @media(max-width:900px){
     nav{ flex-direction:column; height:auto; padding:20px; }
@@ -129,24 +97,10 @@ nav ul li a:hover{
     color:white;
 }
 
-.hero-text{
-    max-width:650px;
-}
-
-.hero h1{
-    font-size:60px;
-    margin-bottom:20px;
-}
-
-.hero h1 span{
-    color:var(--accent);
-}
-
-.hero p{
-    font-size:20px;
-    margin-bottom:40px;
-}
-
+.hero-text{ max-width:650px; }
+.hero h1{ font-size:60px; margin-bottom:20px; }
+.hero h1 span{ color:var(--accent); }
+.hero p{ font-size:20px; margin-bottom:40px; }
 .hero-button a{
     display:inline-block;
     padding:15px 35px;
@@ -157,82 +111,26 @@ nav ul li a:hover{
     font-weight:600;
     transition:.3s;
 }
-
-.hero-button a:hover{
-    transform:translateY(-5px);
-    background:var(--accent);
-    color:var(--primary-dark);
-}
-
-.hero-image{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-.atom{
-    font-size:180px;
-    animation:rotate 8s linear infinite;
-}
-
-.formula{
-    margin-top:20px;
-    padding:12px 25px;
-    background:rgba(255,255,255,.15);
-    border-radius:20px;
-    backdrop-filter:blur(10px);
-}
-
-@keyframes rotate{
-    from{ transform:rotate(0deg); }
-    to{ transform:rotate(360deg); }
-}
+.hero-button a:hover{ transform:translateY(-5px); background:var(--accent); color:var(--primary-dark); }
+.hero-image{ display:flex; flex-direction:column; align-items:center; }
+.atom{ font-size:180px; animation:rotate 8s linear infinite; }
+.formula{ margin-top:20px; padding:12px 25px; background:rgba(255,255,255,.15); border-radius:20px; backdrop-filter:blur(10px); }
+@keyframes rotate{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
 
 /* ===========================================
    STATS
 =========================================== */
-.stats{
-    display:flex;
-    justify-content:center;
-    gap:70px;
-    padding:60px 8%;
-    background:var(--bg-card);
-}
-
-.stat{
-    text-align:center;
-}
-
-.stat h2{
-    font-size:45px;
-    color:var(--primary);
-}
-
-.stat p{
-    color:var(--text-soft);
-    font-size:18px;
-}
+.stats{ display:flex; justify-content:center; gap:70px; padding:60px 8%; background:var(--bg-card); }
+.stat{ text-align:center; }
+.stat h2{ font-size:45px; color:var(--primary); }
+.stat p{ color:var(--text-soft); font-size:18px; }
 
 /* ===========================================
    FEATURE
 =========================================== */
-.feature{
-    padding:80px 8%;
-}
-
-.feature h2{
-    text-align:center;
-    font-size:40px;
-    margin-bottom:50px;
-    color:var(--text-main);
-}
-
-.card-container{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:30px;
-}
-
+.feature{ padding:80px 8%; }
+.feature h2{ text-align:center; font-size:40px; margin-bottom:50px; color:var(--text-main); }
+.card-container{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:30px; }
 .card{
     display:block;
     text-decoration:none;
@@ -244,194 +142,53 @@ nav ul li a:hover{
     transition:.35s;
     box-shadow:var(--shadow-soft);
 }
-
-.card:hover{
-    transform:translateY(-10px);
-    box-shadow:0 18px 40px rgba(0,0,0,.18);
-}
-
-.card i{
-    font-size:50px;
-    color:var(--primary);
-    margin-bottom:20px;
-}
-
-.card h3{
-    font-size:24px;
-    margin-bottom:15px;
-}
-
-.card p{
-    color:var(--text-soft);
-}
+.card:hover{ transform:translateY(-10px); box-shadow:0 18px 40px rgba(0,0,0,.18); }
+.card i{ font-size:50px; color:var(--primary); margin-bottom:20px; }
+.card h3{ font-size:24px; margin-bottom:15px; }
+.card p{ color:var(--text-soft); }
 
 /* ===========================================
-   ABOUT
+   ABOUT & QUOTE & FOOTER
 =========================================== */
-.about{
-    padding:80px 10%;
-    text-align:center;
-}
-
-.about h2{
-    font-size:40px;
-    margin-bottom:25px;
-    color:var(--text-main);
-}
-
-.about p{
-    max-width:800px;
-    margin:auto;
-    font-size:18px;
-    color:var(--text-muted);
-}
+.about{ padding:80px 10%; text-align:center; }
+.about h2{ font-size:40px; margin-bottom:25px; color:var(--text-main); }
+.about p{ max-width:800px; margin:auto; font-size:18px; color:var(--text-muted); }
+.quote{ padding:80px 20px; background:var(--bg-card); text-align:center; }
+.quote blockquote{ max-width:900px; margin:auto; font-size:28px; font-style:italic; color:var(--primary); }
+footer{ background:var(--primary); color:white; text-align:center; padding:40px 20px; }
+footer h3{ font-size:28px; margin-bottom:15px; }
 
 /* ===========================================
-   QUOTE
+   TRANG CHUNG & THANH CUỘN
 =========================================== */
-.quote{
-    padding:80px 20px;
-    background:var(--bg-card);
-    text-align:center;
-}
-
-.quote blockquote{
-    max-width:900px;
-    margin:auto;
-    font-size:28px;
-    font-style:italic;
-    color:var(--primary);
-}
-
-/* ===========================================
-   FOOTER
-=========================================== */
-footer{
-    background:var(--primary);
-    color:white;
-    text-align:center;
-    padding:40px 20px;
-}
-
-footer h3{
-    font-size:28px;
-    margin-bottom:15px;
-}
-
-/* ===========================================
-   TRANG CHUNG
-=========================================== */
-.page{
-    min-height:70vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
-    padding:60px 20px;
-}
-
-.page h1{
-    font-size:50px;
-    margin-bottom:20px;
-    color:var(--text-main);
-}
-
-.page p{
-    font-size:20px;
-    color:var(--text-muted);
-}
-
-/* ===========================================
-   THANH CUỘN
-=========================================== */
-::-webkit-scrollbar{
-    width:10px;
-}
-
-::-webkit-scrollbar-track{
-    background:var(--primary-light);
-}
-
-::-webkit-scrollbar-thumb{
-    background:var(--primary);
-    border-radius:10px;
-}
+.page{ min-height:70vh; display:flex; justify-content:center; align-items:center; flex-direction:column; text-align:center; padding:60px 20px; }
+.page h1{ font-size:50px; margin-bottom:20px; color:var(--text-main); }
+.page p{ font-size:20px; color:var(--text-muted); }
+::-webkit-scrollbar{ width:10px; }
+::-webkit-scrollbar-track{ background:var(--primary-light); }
+::-webkit-scrollbar-thumb{ background:var(--primary); border-radius:10px; }
 
 /* ===========================================
    BẢNG TUẦN HOÀN
 =========================================== */
-.periodic-container{
-    padding:80px 5%;
-}
-
-.title{
-    text-align:center;
-    margin-bottom:50px;
-}
-
-.title h1{
-    font-size:45px;
-    color:var(--primary);
-}
-
-.title p{
-    color:var(--text-soft);
-    font-size:18px;
-}
-
-.periodic-wrapper{
-    display:flex;
-    gap:40px;
-    align-items:flex-start;
-}
-
-.periodic-table{
-    display:grid;
-    grid-template-columns:repeat(18,65px);
-    gap:8px;
-    overflow-x:auto;
-}
-
+.periodic-container{ padding:80px 5%; }
+.title{ text-align:center; margin-bottom:50px; }
+.title h1{ font-size:45px; color:var(--primary); }
+.title p{ color:var(--text-soft); font-size:18px; }
+.periodic-wrapper{ display:flex; gap:40px; align-items:flex-start; }
+.periodic-table{ display:grid; grid-template-columns:repeat(18,65px); gap:8px; overflow-x:auto; }
 .element{
-    width:65px;
-    height:75px;
+    width:65px; height:75px;
     background:var(--bg-card);
     border-radius:10px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    cursor:pointer;
-    transition:.25s;
-    box-shadow:var(--shadow-soft);
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    cursor:pointer; transition:.25s; box-shadow:var(--shadow-soft);
 }
-
-.element:hover{
-    transform:translateY(-6px) scale(1.05);
-}
-
-.element h2{
-    font-size:25px;
-    color:var(--primary);
-}
-
-.number{
-    font-size:11px;
-    color:var(--text-soft);
-}
-
-.name{
-    font-size:10px;
-    text-align:center;
-    color:var(--text-muted);
-}
-
-.empty{
-    width:65px;
-    height:75px;
-}
-
+.element:hover{ transform:translateY(-6px) scale(1.05); }
+.element h2{ font-size:25px; color:var(--primary); }
+.number{ font-size:11px; color:var(--text-soft); }
+.name{ font-size:10px; text-align:center; color:var(--text-muted); }
+.empty{ width:65px; height:75px; }
 .nonmetal{ border-top:4px solid #22c55e; }
 .noble-gas{ border-top:4px solid #a855f7; }
 .alkali{ border-top:4px solid #ef4444; }
@@ -439,40 +196,12 @@ footer h3{
 .metalloid{ border-top:4px solid #eab308; }
 .halogen{ border-top:4px solid #14b8a6; }
 .post-transition{ border-top:4px solid #3b82f6; }
-
-.info-panel{
-    width:350px;
-    background:var(--bg-card);
-    padding:30px;
-    border-radius:20px;
-    box-shadow:var(--shadow-soft);
-}
-
-.info-panel h2{
-    color:var(--primary);
-    margin-bottom:20px;
-}
-
-.info-box{
-    text-align:center;
-}
-
-.info-box h1{
-    font-size:70px;
-    color:var(--primary);
-}
-
-.info-box h3{
-    font-size:25px;
-    margin-bottom:20px;
-    color:var(--text-main);
-}
-
-.info-box p{
-    text-align:left;
-    margin:10px 0;
-    color:var(--text-muted);
-}
+.info-panel{ width:350px; background:var(--bg-card); padding:30px; border-radius:20px; box-shadow:var(--shadow-soft); }
+.info-panel h2{ color:var(--primary); margin-bottom:20px; }
+.info-box{ text-align:center; }
+.info-box h1{ font-size:70px; color:var(--primary); }
+.info-box h3{ font-size:25px; margin-bottom:20px; color:var(--text-main); }
+.info-box p{ text-align:left; margin:10px 0; color:var(--text-muted); }
 
 /* ===========================================
    MÁY TÍNH & CÔNG CỤ
@@ -486,167 +215,75 @@ footer h3{
   box-shadow: var(--shadow-soft);
   margin-top: 40px;
 }
-
-.calculator:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 18px 40px rgba(0,0,0,.15);
-}
-
-.calculator .input-group {
-  margin-bottom: 18px;
-  text-align: left;
-}
-
-.calculator label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
-  color: var(--text-main);
-  font-size: 15px;
-}
-
+.calculator:hover{ transform: translateY(-5px); box-shadow: 0 18px 40px rgba(0,0,0,.15); }
+.calculator .input-group{ margin-bottom: 18px; text-align: left; }
+.calculator label{ display: block; margin-bottom: 6px; font-weight: 600; color: var(--text-main); font-size: 15px; }
 .calculator input{
-  width: 100%;
-  padding: 12px 15px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  font-size: 15px;
-  background: var(--bg-soft);
-  color: var(--text-main);
+  width: 100%; padding: 12px 15px; border-radius: 10px;
+  border: 1px solid var(--border); font-size: 15px;
+  background: var(--bg-soft); color: var(--text-main);
 }
-
-.calculator input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-}
-
+.calculator input:focus{ outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
 .calculator button{
-  width: 100%;
-  padding: 14px;
-  background: var(--primary);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 17px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 5px;
-  transition: .3s;
+  width: 100%; padding: 14px; background: var(--primary); color: white;
+  border: none; border-radius: 10px; font-size: 17px;
+  font-weight: 600; cursor: pointer; margin-top: 5px; transition: .3s;
 }
-
-.calculator button:hover {
-  background: var(--primary-dark);
-  transform: translateY(-2px);
-}
-
-.calculator button:nth-child(even) {
-  background: #64748b;
-  margin-top: 10px;
-}
-
-.calculator button:nth-child(even):hover {
-  background: #475569;
-}
-
+.calculator button:hover{ background: var(--primary-dark); transform: translateY(-2px); }
+.calculator button:nth-child(even){ background: #64748b; margin-top: 10px; }
+.calculator button:nth-child(even):hover{ background: #475569; }
 .result{
-  margin-top: 25px;
-  padding: 20px;
-  background: var(--primary-light);
-  border-radius: 15px;
-  border-left: 4px solid var(--primary);
-  text-align: left;
+  margin-top: 25px; padding: 20px; background: var(--primary-light);
+  border-radius: 15px; border-left: 4px solid var(--primary); text-align: left;
 }
-
-.result h2 {
-  font-size: 20px;
-  color: var(--primary);
-  margin-bottom: 10px;
+.result h2{ font-size: 20px; color: var(--primary); margin-bottom: 10px; }
+.result p{ font-size: 15px; color: var(--text-main); font-weight: 500; }
+.result-box{
+  margin-top: 20px; padding: 18px; background: var(--primary-light);
+  border: 1px solid var(--primary); border-radius: 12px; text-align: center;
 }
-
-.result p {
-  font-size: 15px;
-  color: var(--text-main);
-  font-weight: 500;
-}
-
-.result-box {
-  margin-top: 20px;
-  padding: 18px;
-  background: var(--primary-light);
-  border: 1px solid var(--primary);
-  border-radius: 12px;
-  text-align: center;
-}
-
-.result-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--primary);
-  margin-bottom: 8px;
-}
-
-.result-text {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-main);
-  letter-spacing: 0.5px;
-}
-
-.element-list {
-  text-align: left;
-  border-top: 1px solid var(--border);
-  padding-top: 12px;
-  font-size: 14px;
-}
-
-.element-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 0;
-  color: var(--text-main);
-}
-
-.element-item span:first-child { font-weight: 500; }
+.result-title{ font-size: 14px; font-weight: 600; color: var(--primary); margin-bottom: 8px; }
+.result-text{ font-size: 18px; font-weight: 700; color: var(--text-main); letter-spacing: 0.5px; }
+.element-list{ text-align: left; border-top: 1px solid var(--border); padding-top: 12px; font-size: 14px; }
+.element-item{ display: flex; justify-content: space-between; padding: 4px 0; color: var(--text-main); }
+.element-item span:first-child{ font-weight: 500; }
 
 /* ===========================================
-   QUIZ - CHỮ ĐẬM NÉT, TỰ ĐỘNG ĐỔI MÀU
+   QUIZ - GHI ĐÈ MẠNH NHẤT, KHÔNG ĐEN NỮA
 =========================================== */
 .quiz-container,
 .quiz-box,
 .question-card,
 .quiz-question-card {
     background: var(--bg-card) !important;
-    color: var(--text-main) !important;
+    color: #ffffff !important;
     border: 2px solid var(--border) !important;
     border-radius: 20px;
     padding: 30px;
     box-shadow: var(--shadow-soft);
-    transition: all 0.3s ease;
 }
 
 .quiz-question,
 .question-text {
     font-size: 22px !important;
-    font-weight: 700 !important;
-    color: var(--text-main) !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
     opacity: 1 !important;
     margin-bottom: 25px;
     line-height: 1.5;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Thêm bóng nhẹ cho chữ nổi hơn */
 }
 
 .quiz-option,
 .answer-option,
 .option {
     background: var(--bg-soft) !important;
-    color: var(--text-main) !important;
+    color: #ffffff !important;
     border: 2px solid var(--border) !important;
     border-radius: 12px;
     padding: 14px 20px;
     margin-bottom: 12px;
     font-size: 17px !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     opacity: 1 !important;
     cursor: pointer;
     transition: all 0.25s ease;
@@ -660,42 +297,27 @@ footer h3{
 
 .quiz-option.correct,
 .answer-option.correct {
-    background: rgba(34, 197, 94, 0.2) !important;
+    background: rgba(34, 197, 94, 0.25) !important;
     border-color: var(--success) !important;
     color: var(--success) !important;
-    font-weight: 700 !important;
 }
 
 .quiz-option.wrong,
 .answer-option.wrong {
-    background: rgba(239, 68, 68, 0.2) !important;
+    background: rgba(239, 68, 68, 0.25) !important;
     border-color: var(--danger) !important;
     color: var(--danger) !important;
-    font-weight: 700 !important;
 }
+
 /* ===========================================
-   PHỤC VỤ DI ĐỘNG
+   RESPONSIVE
 =========================================== */
-@media(max-width:1200px){
-    .periodic-wrapper{ flex-direction:column; }
-    .info-panel{ width:100%; }
-}
-
-@media(max-width:900px){
-    .hero{ flex-direction:column; text-align:center; }
-    .hero h1{ font-size:42px; }
-    .hero-image{ margin-top:40px; }
-    .atom{ font-size:120px; }
-    .stats{ flex-direction:column; gap:30px; }
-}
-
+@media(max-width:1200px){ .periodic-wrapper{ flex-direction:column; } .info-panel{ width:100%; } }
+@media(max-width:900px){ .hero{ flex-direction:column; text-align:center; } .hero h1{ font-size:42px; } .hero-image{ margin-top:40px; } .atom{ font-size:120px; } .stats{ flex-direction:column; gap:30px; } }
 @media(max-width:600px){
-    .hero h1{ font-size:34px; }
-    .hero p{ font-size:16px; }
-    .card{ padding:25px; }
-    .card i{ font-size:40px; }
+    .hero h1{ font-size:34px; } .hero p{ font-size:16px; }
+    .card{ padding:25px; } .card i{ font-size:40px; }
     .feature h2, .about h2{ font-size:32px; }
     .periodic-table{ grid-template-columns:repeat(18, 50px); gap:5px; }
-    .element{ width:50px; height:60px; }
-    .element h2{ font-size:20px; }
+    .element{ width:50px; height:60px; } .element h2{ font-size:20px; }
 }
