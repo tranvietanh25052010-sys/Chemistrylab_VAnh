@@ -10,7 +10,7 @@
     --danger: #ef4444;
     --warning: #f59e0b;
 
-    /* CHẾ ĐỘ SÁNG: Chữ đen tuyền rõ nét */
+    /* CHẾ ĐỘ SÁNG */
     --bg-main: #eef4ff;
     --bg-card: #ffffff;
     --bg-soft: #f8fafc;
@@ -22,27 +22,26 @@
     --shadow-soft: 0 10px 30px rgba(0,0,0,.08);
 }
 
-/* CHẾ ĐỘ TỐI: Chữ trắng tuyền không chìm */
+/* CHẾ ĐỘ TỐI: NÊN XÁM ĐẬM DỊU MẮT, CHỮ TRẮNG SÁNG */
 [data-theme="dark"] {
     --primary: #3b82f6;
-    --primary-light: #1e293b;
+    --primary-light: #27374d; /* Xám đậm nhẹ nhàng chứ không đen tuyền */
     --primary-dark: #60a5fa;
     --accent: #fbbf24;
     --success: #22c55e;
     --danger: #f87171;
     --warning: #fcd34d;
 
-    --bg-main: #0f172a;
-    --bg-card: #1e293b;
-    --bg-soft: #334155;
-    --text-main: #ffffff;
+    --bg-main: #1b2430; /* Nền tổng thể xám đậm dễ nhìn */
+    --bg-card: #27374d; /* Ô câu hỏi nhạt hơn nền một chút */
+    --bg-soft: #33475b; /* Ô đáp án nhạt hơn nữa */
+    --text-main: #f8fafc; /* Trắng sáng không bị ngả xám */
     --text-soft: #e2e8f0;
     --text-muted: #cbd5e1;
-    --border: #64748b;
+    --border: #4a607a; /* Viền nổi rõ hơn */
     --shadow: 0 5px 15px rgba(0,0,0,.35);
     --shadow-soft: 0 10px 30px rgba(0,0,0,.25);
 }
-
 /* ===========================================
    RESET
 =========================================== */
@@ -634,6 +633,7 @@ footer h3{
     opacity: 1 !important;
     margin-bottom: 25px;
     line-height: 1.5;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Thêm bóng nhẹ cho chữ nổi hơn */
 }
 
 .quiz-option,
@@ -660,7 +660,7 @@ footer h3{
 
 .quiz-option.correct,
 .answer-option.correct {
-    background: rgba(34, 197, 94, 0.15) !important;
+    background: rgba(34, 197, 94, 0.2) !important;
     border-color: var(--success) !important;
     color: var(--success) !important;
     font-weight: 700 !important;
@@ -668,29 +668,11 @@ footer h3{
 
 .quiz-option.wrong,
 .answer-option.wrong {
-    background: rgba(239, 68, 68, 0.15) !important;
+    background: rgba(239, 68, 68, 0.2) !important;
     border-color: var(--danger) !important;
     color: var(--danger) !important;
     font-weight: 700 !important;
 }
-
-.quiz-result,
-.result-box {
-    background: var(--bg-card) !important;
-    color: var(--text-main) !important;
-    border: 2px solid var(--border) !important;
-    border-radius: 15px;
-    padding: 25px;
-    margin-top: 20px;
-}
-
-.quiz-result *,
-.result-box * {
-    color: var(--text-main) !important;
-    font-weight: 600 !important;
-    opacity: 1 !important;
-}
-
 /* ===========================================
    PHỤC VỤ DI ĐỘNG
 =========================================== */
