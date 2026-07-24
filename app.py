@@ -26,6 +26,10 @@ def check_name():
 # ==========================================
 @app.before_request
 def log_access():
+    # Bỏ qua không ghi log trang xem nhật ký và trang nhập tên
+    if request.path in ["/admin-logs-chemlab-2026", "/enter-name"]:
+        return
+    
     username = session.get("username", "Unknown")
     timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     ip = request.remote_addr
