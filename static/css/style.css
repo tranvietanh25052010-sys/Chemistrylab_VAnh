@@ -1,7 +1,4 @@
 /* ===========================================
-   BIẾN MÀU & CHẾ ĐỘ SÁNG/TỐI - CHUẨN TƯƠNG PHẢN
-=========================================== */
-/* ===========================================
    BIẾN MÀU & CHẾ ĐỘ SÁNG/TỐI - TƯƠNG PHẢN TỐI ĐA
 =========================================== */
 :root {
@@ -17,7 +14,7 @@
     --bg-main: #eef4ff;
     --bg-card: #ffffff;
     --bg-soft: #f8fafc;
-    --text-main: #000000; /* Đậm nhất có thể */
+    --text-main: #000000;
     --text-soft: #334155;
     --text-muted: #475569;
     --border: #cbd5e1;
@@ -38,30 +35,10 @@
     --bg-main: #0f172a;
     --bg-card: #1e293b;
     --bg-soft: #334155;
-    --text-main: #ffffff; /* Trắng sáng rõ nhất */
+    --text-main: #ffffff;
     --text-soft: #e2e8f0;
     --text-muted: #cbd5e1;
     --border: #64748b;
-    --shadow: 0 5px 15px rgba(0,0,0,.35);
-    --shadow-soft: 0 10px 30px rgba(0,0,0,.25);
-}
-/* CHẾ ĐỘ TỐI: Chữ trắng kem, không chói mắt */
-[data-theme="dark"] {
-    --primary: #3b82f6;
-    --primary-light: #1e293b;
-    --primary-dark: #60a5fa;
-    --accent: #fbbf24;
-    --success: #22c55e;
-    --danger: #f87171;
-    --warning: #fcd34d;
-
-    --bg-main: #0f172a;
-    --bg-card: #1e293b;
-    --bg-soft: #334155;
-    --text-main: #f1f5f9;
-    --text-soft: #cbd5e1;
-    --text-muted: #94a3b8;
-    --border: #475569;
     --shadow: 0 5px 15px rgba(0,0,0,.35);
     --shadow-soft: 0 10px 30px rgba(0,0,0,.25);
 }
@@ -121,7 +98,7 @@ nav ul{
     display:flex;
     list-style:none;
     gap:28px;
-    padding-right:150px; /* Chừa đủ chỗ cho nút ngôn ngữ + đổi giao diện */
+    padding-right:150px;
 }
 
 nav ul li a{
@@ -634,88 +611,12 @@ footer h3{
 .element-item span:first-child { font-weight: 500; }
 
 /* ===========================================
-   QUIZ - TỰ ĐỘNG ĐỔI MÀU THEO CHẾ ĐỘ
-=========================================== */
-.quiz-container,
-.quiz-question-card {
-    background: var(--bg-card);
-    color: var(--text-main);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: var(--shadow-soft);
-}
-
-.quiz-question {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--text-main);
-    margin-bottom: 25px;
-}
-
-.quiz-option {
-    background: var(--bg-soft);
-    color: var(--text-main);
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 20px;
-    margin-bottom: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.quiz-option:hover {
-    background: var(--primary-light);
-    border-color: var(--primary);
-}
-
-.quiz-option.correct {
-    background: rgba(34, 197, 94, 0.15);
-    border-color: var(--success);
-    color: var(--success);
-    font-weight: 600;
-}
-
-.quiz-option.wrong {
-    background: rgba(239, 68, 68, 0.15);
-    border-color: var(--danger);
-    color: var(--danger);
-    font-weight: 600;
-}
-
-/* ===========================================
-   PHỤC VỤ DI ĐỘNG
-=========================================== */
-@media(max-width:1200px){
-    .periodic-wrapper{ flex-direction:column; }
-    .info-panel{ width:100%; }
-}
-
-@media(max-width:900px){
-    .hero{ flex-direction:column; text-align:center; }
-    .hero h1{ font-size:42px; }
-    .hero-image{ margin-top:40px; }
-    .atom{ font-size:120px; }
-    .stats{ flex-direction:column; gap:30px; }
-}
-
-@media(max-width:600px){
-    .hero h1{ font-size:34px; }
-    .hero p{ font-size:16px; }
-    .card{ padding:25px; }
-    .card i{ font-size:40px; }
-    .feature h2, .about h2{ font-size:32px; }
-    .periodic-table{ grid-template-columns:repeat(18, 50px); gap:5px; }
-    .element{ width:50px; height:60px; }
-    .element h2{ font-size:20px; }
-}
-/* ===========================================
-   QUIZ - CSS RIÊNG, TỰ ĐỘNG ĐỔI MÀU + CHỮ ĐẬM NÉT
+   QUIZ - CHỮ ĐẬM NÉT, TỰ ĐỘNG ĐỔI MÀU
 =========================================== */
 .quiz-container,
 .quiz-box,
-.question-card {
+.question-card,
+.quiz-question-card {
     background: var(--bg-card) !important;
     color: var(--text-main) !important;
     border: 2px solid var(--border) !important;
@@ -728,7 +629,7 @@ footer h3{
 .quiz-question,
 .question-text {
     font-size: 22px !important;
-    font-weight: 700 !important; /* Đậm nhất */
+    font-weight: 700 !important;
     color: var(--text-main) !important;
     opacity: 1 !important;
     margin-bottom: 25px;
@@ -788,4 +689,31 @@ footer h3{
     color: var(--text-main) !important;
     font-weight: 600 !important;
     opacity: 1 !important;
+}
+
+/* ===========================================
+   PHỤC VỤ DI ĐỘNG
+=========================================== */
+@media(max-width:1200px){
+    .periodic-wrapper{ flex-direction:column; }
+    .info-panel{ width:100%; }
+}
+
+@media(max-width:900px){
+    .hero{ flex-direction:column; text-align:center; }
+    .hero h1{ font-size:42px; }
+    .hero-image{ margin-top:40px; }
+    .atom{ font-size:120px; }
+    .stats{ flex-direction:column; gap:30px; }
+}
+
+@media(max-width:600px){
+    .hero h1{ font-size:34px; }
+    .hero p{ font-size:16px; }
+    .card{ padding:25px; }
+    .card i{ font-size:40px; }
+    .feature h2, .about h2{ font-size:32px; }
+    .periodic-table{ grid-template-columns:repeat(18, 50px); gap:5px; }
+    .element{ width:50px; height:60px; }
+    .element h2{ font-size:20px; }
 }
