@@ -1,0 +1,170 @@
+/* ===========================================
+   PERIODIC TABLE
+=========================================== */
+
+.periodic-container{
+
+    padding:80px 5%;
+
+}
+
+
+.periodic-container h1{
+
+    text-align:center;
+
+    font-size:45px;
+
+    margin-bottom:50px;
+
+}
+
+
+
+.periodic-table{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(18,1fr);
+
+    gap:10px;
+
+}
+
+
+
+.element{
+
+    background:white;
+
+    min-height:120px;
+
+    border-radius:15px;
+
+    padding:15px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:
+    0 8px 20px rgba(0,0,0,.08);
+
+}
+
+
+
+.element:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+    0 15px 30px rgba(0,0,0,.15);
+
+}
+
+
+
+.element h2{
+
+    font-size:35px;
+
+    color:#2563eb;
+
+}
+
+
+
+.element h3{
+
+    font-size:18px;
+
+}
+
+
+
+.element p{
+
+    color:#666;
+
+    font-size:14px;
+
+}
+
+
+
+/* CATEGORY COLORS */
+
+
+.nonmetal{
+
+    border-top:5px solid #22c55e;
+
+}
+
+
+.noble{
+
+    border-top:5px solid #a855f7;
+
+}
+
+
+.alkali{
+
+    border-top:5px solid #ef4444;
+
+}
+
+
+.alkaline{
+
+    border-top:5px solid #f97316;
+
+}
+
+
+
+.transition{
+
+    border-top:5px solid #3b82f6;
+
+}
+
+
+
+/* MOBILE */
+
+
+@media(max-width:900px){
+
+    .periodic-table{
+
+        grid-template-columns:
+        repeat(6,1fr);
+
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .periodic-table{
+
+        grid-template-columns:
+        repeat(3,1fr);
+
+    }
+
+
+    .element h2{
+
+        font-size:25px;
+
+    }
+
+}
