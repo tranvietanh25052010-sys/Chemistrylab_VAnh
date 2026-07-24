@@ -2,26 +2,30 @@
    BIẾN MÀU & CHẾ ĐỘ SÁNG/TỐI
 =========================================== */
 :root {
-    --primary: #2563eb;
-    --primary-light: #dbeafe;
-    --primary-dark: #1d4ed8;
-    --accent: #ffe082;
-    --success: #16a34a;
-    --danger: #ef4444;
-    --warning: #f59e0b;
-
-    /* Mặc định Sáng */
-    --bg-main: #eef4ff;
-    --bg-card: #ffffff;
-    --bg-soft: #f8fafc;
-    --text-main: #1e293b;
-    --text-soft: #64748b;
-    --text-muted: #475569;
-    --border: #e2e8f0;
-    --shadow: 0 5px 15px rgba(0,0,0,.15);
-    --shadow-soft: 0 10px 30px rgba(0,0,0,.08);
+    ...
+    /* Chỉnh chữ sáng rõ hơn */
+    --text-main: #0f172a; /* Đậm hơn ở chế độ sáng */
+    --text-soft: #475569;
+    --text-muted: #64748b;
 }
 
+[data-theme="dark"] {
+    ...
+    /* Chỉnh chữ trắng sáng, đậm nét ở chế độ tối */
+    --text-main: #ffffff !important;
+    --text-soft: #e2e8f0;
+    --text-muted: #cbd5e1;
+}
+
+/* Tăng độ đậm cho chữ trong câu hỏi & đáp án */
+.quiz-question,
+.quiz-option,
+.result p,
+.result-text {
+    font-weight: 600 !important;
+    color: var(--text-main) !important;
+    opacity: 1 !important;
+}
 /* CHẾ ĐỘ TỐI */
 [data-theme="dark"] {
     --primary: #3b82f6;
