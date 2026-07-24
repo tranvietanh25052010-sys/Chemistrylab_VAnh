@@ -1,30 +1,49 @@
 /* ===========================================
    BIẾN MÀU & CHẾ ĐỘ SÁNG/TỐI
 =========================================== */
+/* ===========================================
+   BIẾN MÀU & CHẾ ĐỘ SÁNG/TỐI - CHUẨN TƯƠNG PHẢN
+=========================================== */
 :root {
-    ...
-    /* Chỉnh chữ sáng rõ hơn */
-    --text-main: #0f172a; /* Đậm hơn ở chế độ sáng */
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --primary-dark: #1d4ed8;
+    --accent: #ffe082;
+    --success: #16a34a;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+
+    /* CHẾ ĐỘ SÁNG: Chữ đậm đen, nền sáng dịu */
+    --bg-main: #eef4ff;
+    --bg-card: #ffffff;
+    --bg-soft: #f8fafc;
+    --text-main: #0f172a; /* Đậm đen nhạt, không đen tuyền */
     --text-soft: #475569;
     --text-muted: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 5px 15px rgba(0,0,0,.15);
+    --shadow-soft: 0 10px 30px rgba(0,0,0,.08);
 }
 
+/* CHẾ ĐỘ TỐI: Chữ trắng kem, không trắng loá */
 [data-theme="dark"] {
-    ...
-    /* Chỉnh chữ trắng sáng, đậm nét ở chế độ tối */
-    --text-main: #ffffff !important;
-    --text-soft: #e2e8f0;
-    --text-muted: #cbd5e1;
-}
+    --primary: #3b82f6;
+    --primary-light: #1e293b;
+    --primary-dark: #60a5fa;
+    --accent: #fbbf24;
+    --success: #22c55e;
+    --danger: #f87171;
+    --warning: #fcd34d;
 
-/* Tăng độ đậm cho chữ trong câu hỏi & đáp án */
-.quiz-question,
-.quiz-option,
-.result p,
-.result-text {
-    font-weight: 600 !important;
-    color: var(--text-main) !important;
-    opacity: 1 !important;
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --bg-soft: #334155;
+    --text-main: #f1f5f9; /* Trắng kem sáng rõ, không chói mắt */
+    --text-soft: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border: #475569;
+    --shadow: 0 5px 15px rgba(0,0,0,.35);
+    --shadow-soft: 0 10px 30px rgba(0,0,0,.25);
 }
 /* CHẾ ĐỘ TỐI */
 [data-theme="dark"] {
