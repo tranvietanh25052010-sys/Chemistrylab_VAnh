@@ -98,7 +98,7 @@ nav ul{
     display:flex;
     list-style:none;
     gap:28px;
-    padding-right:150px; /* Chừa chỗ cho nút ngôn ngữ */
+    padding-right:150px; /* Chừa đủ chỗ cho nút ngôn ngữ + đổi giao diện */
 }
 
 nav ul li a{
@@ -476,7 +476,7 @@ footer h3{
 }
 
 /* ===========================================
-   MÁY TÍNH & CÔNG CỤ - CHUẨN MÀU CHỮ
+   MÁY TÍNH & CÔNG CỤ
 =========================================== */
 .calculator{
   background: var(--bg-card);
@@ -486,7 +486,6 @@ footer h3{
   max-width: 420px;
   box-shadow: var(--shadow-soft);
   margin-top: 40px;
-  transition: .35s;
 }
 
 .calculator:hover {
@@ -513,8 +512,6 @@ footer h3{
   border-radius: 10px;
   border: 1px solid var(--border);
   font-size: 15px;
-  transition: .25s;
-  font-family: 'Poppins', sans-serif;
   background: var(--bg-soft);
   color: var(--text-main);
 }
@@ -537,7 +534,6 @@ footer h3{
   cursor: pointer;
   margin-top: 5px;
   transition: .3s;
-  font-family: 'Poppins', sans-serif;
 }
 
 .calculator button:hover {
@@ -613,6 +609,57 @@ footer h3{
 }
 
 .element-item span:first-child { font-weight: 500; }
+
+/* ===========================================
+   QUIZ - TỰ ĐỘNG ĐỔI MÀU THEO CHẾ ĐỘ
+=========================================== */
+.quiz-container,
+.quiz-question-card {
+    background: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow-soft);
+}
+
+.quiz-question {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 25px;
+}
+
+.quiz-option {
+    background: var(--bg-soft);
+    color: var(--text-main);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quiz-option:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+}
+
+.quiz-option.correct {
+    background: rgba(34, 197, 94, 0.15);
+    border-color: var(--success);
+    color: var(--success);
+    font-weight: 600;
+}
+
+.quiz-option.wrong {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: var(--danger);
+    color: var(--danger);
+    font-weight: 600;
+}
 
 /* ===========================================
    PHỤC VỤ DI ĐỘNG
