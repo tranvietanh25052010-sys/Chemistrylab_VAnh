@@ -8,7 +8,6 @@ import os
 app = Flask(__name__)
 app.secret_key = "chemlab_secure_key_2026_only_for_you"
 
-# Access log file
 LOG_FILE = "access_log.txt"
 if not os.path.exists(LOG_FILE):
     open(LOG_FILE, "w", encoding="utf-8").close()
@@ -18,10 +17,9 @@ if not os.path.exists(LOG_FILE):
 # ==========================================
 @app.before_request
 def check_name():
-    # Public routes that do not require a name
-    public_routes = ["/nhap_ten", "/admin-logs-chemlab-2026"]
+    public_routes = ["/enter-name", "/admin-logs-chemlab-2026"]
     if "username" not in session and request.path not in public_routes:
-        return redirect("/nhap_ten")
+        return redirect("/enter-name")
 
 # ==========================================
 # Log all visits with username
@@ -41,14 +39,14 @@ def log_access():
 # ==========================================
 # Enter Name Page
 # ==========================================
-@app.route("/nhap_ten", methods=["GET", "POST"])
+@app.route("/enter-name", methods=["GET", "POST"])
 def enter_name():
     if request.method == "POST":
         name_input = request.form.get("name", "").strip()
         if name_input:
             session["username"] = name_input
             return redirect("/")
-    return render_template("nhap_ten.html")
+    return render_template("enter_name.html")
 
 # ==========================================
 # Main Pages
@@ -83,16 +81,11 @@ def quiz():
 @app.route("/admin-logs-chemlab-2026")
 def view_logs():
     password = request.args.get("pass")
-    if password != "chemlab123": # Change this to your own password
+    if password != "chemlab123":
         abort(403)
     with open(LOG_FILE, "r", encoding="utf-8") as f:
         content = f.read()
-    return f"""
-    <html style="background:#0f172a;color:#e2e8f0;padding:20px;font-family:monospace;">
-        <h2>📋 ChemLab Access Logs</h2>
-        <pre>{content}</pre>
-    </html>
-    """
+    return f"<html style='background:#0f172a;color:#e2e8f0;padding:20px;font-family:monospace;'><h2>📋 ChemLab Access Logs</h2><pre>{content}</pre></html>"
 
 # ==========================================
 # Error Handler
@@ -101,8 +94,5 @@ def view_logs():
 def page_not_found(error):
     return render_template("error.html"), 404
 
-# ==========================================
-# Run App
-# ==========================================
 if __name__ == "__main__":
     app.run(debug=True)
