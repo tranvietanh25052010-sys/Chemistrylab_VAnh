@@ -1,6 +1,9 @@
 /* ===========================================
    BIẾN MÀU & CHẾ ĐỘ SÁNG/TỐI - CHUẨN TƯƠNG PHẢN
 =========================================== */
+/* ===========================================
+   BIẾN MÀU & CHẾ ĐỘ SÁNG/TỐI - TƯƠNG PHẢN TỐI ĐA
+=========================================== */
 :root {
     --primary: #2563eb;
     --primary-light: #dbeafe;
@@ -10,18 +13,38 @@
     --danger: #ef4444;
     --warning: #f59e0b;
 
-    /* CHẾ ĐỘ SÁNG: Chữ đậm rõ, nền dịu mắt */
+    /* CHẾ ĐỘ SÁNG: Chữ đen tuyền rõ nét */
     --bg-main: #eef4ff;
     --bg-card: #ffffff;
     --bg-soft: #f8fafc;
-    --text-main: #0f172a;
-    --text-soft: #475569;
-    --text-muted: #64748b;
-    --border: #e2e8f0;
+    --text-main: #000000; /* Đậm nhất có thể */
+    --text-soft: #334155;
+    --text-muted: #475569;
+    --border: #cbd5e1;
     --shadow: 0 5px 15px rgba(0,0,0,.15);
     --shadow-soft: 0 10px 30px rgba(0,0,0,.08);
 }
 
+/* CHẾ ĐỘ TỐI: Chữ trắng tuyền không chìm */
+[data-theme="dark"] {
+    --primary: #3b82f6;
+    --primary-light: #1e293b;
+    --primary-dark: #60a5fa;
+    --accent: #fbbf24;
+    --success: #22c55e;
+    --danger: #f87171;
+    --warning: #fcd34d;
+
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --bg-soft: #334155;
+    --text-main: #ffffff; /* Trắng sáng rõ nhất */
+    --text-soft: #e2e8f0;
+    --text-muted: #cbd5e1;
+    --border: #64748b;
+    --shadow: 0 5px 15px rgba(0,0,0,.35);
+    --shadow-soft: 0 10px 30px rgba(0,0,0,.25);
+}
 /* CHẾ ĐỘ TỐI: Chữ trắng kem, không chói mắt */
 [data-theme="dark"] {
     --primary: #3b82f6;
