@@ -14,9 +14,9 @@
     --bg-main: #eef4ff;
     --bg-card: #ffffff;
     --bg-soft: #f8fafc;
-    --text-main: #222222;
-    --text-soft: #666666;
-    --text-muted: #555555;
+    --text-main: #1e293b;
+    --text-soft: #64748b;
+    --text-muted: #475569;
     --border: #e2e8f0;
     --shadow: 0 5px 15px rgba(0,0,0,.15);
     --shadow-soft: 0 10px 30px rgba(0,0,0,.08);
@@ -35,9 +35,9 @@
     --bg-main: #0f172a;
     --bg-card: #1e293b;
     --bg-soft: #334155;
-    --text-main: #f1f5f9;
-    --text-soft: #94a3b8;
-    --text-muted: #cbd5e1;
+    --text-main: #f8fafc; /* Chữ sáng rõ hơn trong tối */
+    --text-soft: #cbd5e1;
+    --text-muted: #94a3b8;
     --border: #475569;
     --shadow: 0 5px 15px rgba(0,0,0,.35);
     --shadow-soft: 0 10px 30px rgba(0,0,0,.25);
@@ -97,7 +97,8 @@ nav{
 nav ul{
     display:flex;
     list-style:none;
-    gap:30px;
+    gap:28px;
+    padding-right:150px; /* Chừa chỗ cho nút ngôn ngữ */
 }
 
 nav ul li a{
@@ -110,19 +111,10 @@ nav ul li a{
 nav ul li a:hover{
     color:var(--accent);
 }
-/* ===========================
-   SỬA: CHỪA CHỖ CHO NÚT NGÔN NGỮ + ĐỔI GIAO DIỆN
-============================ */
-nav ul {
-    padding-right: 150px; /* Chừa đủ rộng cho 2 nút bên phải */
-    gap: 28px; /* Giữ khoảng cách đều giữa các mục */
-}
 
-/* Khi thu nhỏ màn hình */
 @media(max-width:900px){
-    nav ul {
-        padding-right: 0; /* Trên di động menu xếp dưới logo nên không cần chừa */
-    }
+    nav{ flex-direction:column; height:auto; padding:20px; }
+    nav ul{ margin-top:20px; flex-wrap:wrap; justify-content:center; padding-right:0; }
 }
 
 /* ===========================================
@@ -173,7 +165,6 @@ nav ul {
     color:var(--primary-dark);
 }
 
-/* CHEMISTRY VISUAL */
 .hero-image{
     display:flex;
     flex-direction:column;
@@ -442,7 +433,6 @@ footer h3{
     height:75px;
 }
 
-/* NHÓM NGUYÊN TỐ */
 .nonmetal{ border-top:4px solid #22c55e; }
 .noble-gas{ border-top:4px solid #a855f7; }
 .alkali{ border-top:4px solid #ef4444; }
@@ -486,7 +476,7 @@ footer h3{
 }
 
 /* ===========================================
-   MÁY TÍNH & CÔNG CỤ
+   MÁY TÍNH & CÔNG CỤ - SỬA CHỮA MÀU CHỮ
 =========================================== */
 .calculator{
   background: var(--bg-card);
@@ -581,8 +571,9 @@ footer h3{
 
 .result p {
   font-size: 15px;
-  color: var(--text-main);
+  color: var(--text-main) !important; /* Luôn rõ nét */
   font-weight: 500;
+  opacity: 1 !important;
 }
 
 .result-box {
@@ -604,8 +595,9 @@ footer h3{
 .result-text {
   font-size: 18px;
   font-weight: 700;
-  color: var(--primary-dark);
+  color: var(--text-main) !important; /* Đậm rõ trong Dark Mode */
   letter-spacing: 0.5px;
+  opacity: 1 !important;
 }
 
 .element-list {
@@ -633,8 +625,6 @@ footer h3{
 }
 
 @media(max-width:900px){
-    nav{ flex-direction:column; height:auto; padding:20px; }
-    nav ul{ margin-top:20px; flex-wrap:wrap; justify-content:center; }
     .hero{ flex-direction:column; text-align:center; }
     .hero h1{ font-size:42px; }
     .hero-image{ margin-top:40px; }
