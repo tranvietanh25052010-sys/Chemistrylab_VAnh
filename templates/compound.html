@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Compound Mass Calculator
+{% endblock %}
+
+{% block content %}
+<section class="page">
+  <h1>🧪 Compound Mass Calculator</h1>
+  <p>Enter chemical formula to calculate molar mass and element breakdown</p>
+
+  <div class="calculator">
+    <div class="input-group">
+      <label>Chemical Formula</label>
+      <input id="formula" type="text" placeholder="Example: H2O / Ca(OH)2" spellcheck="false">
+    </div>
+
+    <button onclick="calculateMass()">Calculate</button>
+    <button onclick="resetAll()">Reset</button>
+
+    <div class="result-box" id="result-box" style="display: none;">
+      <div class="result-title">📊 Calculation Result</div>
+      <div class="result-text" id="total-mass"></div>
+      <div class="element-list" id="element-list"></div>
+    </div>
+
+    <p id="status"></p>
+  </div>
+</section>
+
+<script src="{{ url_for('static', filename='js/compound.js') }}"></script>
+{% endblock %}

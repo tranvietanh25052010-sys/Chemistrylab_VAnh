@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Mole Calculator
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/mol.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="page">
+  <h1>⚗️ Mole Calculator</h1>
+  <p>Calculate Mass, Moles, Particles, and Gas Volume under STP / RTP</p>
+
+  <div class="calculator">
+    <!-- Select calculation mode -->
+    <div class="input-group">
+      <label>Select Conversion Type</label>
+      <select id="mode" onchange="changeMode()">
+        <option value="">-- Choose a mode --</option>
+        <option value="mass">📏 Mass → Moles, Particles, Volume</option>
+        <option value="moles">🔢 Moles → Mass, Particles, Volume</option>
+        <option value="particles">🔬 Particles → Moles, Mass, Volume</option>
+        <option value="volume">🧪 Volume → Moles, Mass, Particles</option>
+      </select>
+    </div>
+
+    <!-- Gas condition selector -->
+    <div class="input-group" id="cond-group" style="display:none;">
+      <label>Gas Condition</label>
+      <select id="condition">
+        <option value="stp">STP (0°C, 1 atm → 22.414 L/mol)</option>
+        <option value="rtp">RTP (25°C, 1 atm → 24.79 L/mol)</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label>Molar Mass (g/mol)</label>
+      <input id="molar" type="number" step="any" placeholder="Enter molar mass">
+    </div>
+
+    <!-- Dynamic input field with clear hint -->
+    <div class="input-group" id="input-field"></div>
+
+    <!-- Result fields (read-only) -->
+    <div class="result-fields">
+      <div class="input-group">
+        <label>Mass (g)</label>
+        <input id="mass" type="number" readonly placeholder="Result">
+      </div>
+      <div class="input-group">
+        <label>Amount of Substance (mol)</label>
+        <input id="mole" type="number" readonly placeholder="Result">
+      </div>
+      <div class="input-group">
+        <label>Number of Particles</label>
+        <input id="particles" type="text" readonly placeholder="Result">
+      </div>
+      <div class="input-group">
+        <label>Gas Volume at STP (L)</label>
+        <input id="vol-stp" type="number" readonly placeholder="Result">
+      </div>
+      <div class="input-group">
+        <label>Gas Volume at RTP (L)</label>
+        <input id="vol-rtp" type="number" readonly placeholder="Result">
+      </div>
+    </div>
+
+    <button onclick="calculate()">Calculate</button>
+    <button onclick="resetAll()">Reset</button>
+
+    <!-- Clear guide for scientific notation -->
+    <p style="font-size:13px; color:#64748b; margin-top:10px; text-align:left;">
+      💡 Tip: For large/small numbers, use <b>e</b> for ×10. Example: 6.022×10²³ → enter <b>6.022e23</b>
+    </p>
+
+    <p id="status"></p>
+  </div>
+</section>
+
+<script src="{{ url_for('static', filename='js/mol.js') }}"></script>
+{% endblock %}

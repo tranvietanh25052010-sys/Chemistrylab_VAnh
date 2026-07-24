@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Equation Balancer
+{% endblock %}
+
+{% block content %}
+<section class="page">
+  <h1>⚖️ Equation Balancer</h1>
+  <p>Enter chemical equation to balance it automatically</p>
+
+  <div class="calculator">
+    <div class="input-group">
+      <label>Chemical Equation</label>
+      <input id="equation" type="text" placeholder="Example: H2 + O2 = H2O" spellcheck="false">
+    </div>
+
+    <button onclick="balanceEquation()">Balance Equation</button>
+    <button onclick="resetAll()">Reset</button>
+
+    <div class="result-box" id="result-box" style="display: none;">
+      <div class="result-title">✅ Balanced Equation</div>
+      <div class="result-text" id="balanced-result"></div>
+    </div>
+
+    <p id="status"></p>
+  </div>
+</section>
+
+<script src="{{ url_for('static', filename='js/equation.js') }}"></script>
+{% endblock %}

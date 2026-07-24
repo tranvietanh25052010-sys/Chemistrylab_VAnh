@@ -1,0 +1,1137 @@
+/* ===========================================
+   RESET
+=========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+
+body{
+
+    background:#eef4ff;
+
+    color:#222;
+
+    line-height:1.6;
+
+}
+
+
+
+/* ===========================================
+   NAVBAR
+=========================================== */
+
+
+nav{
+
+    width:100%;
+
+    height:80px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 8%;
+
+    background:#2563eb;
+
+    color:white;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    box-shadow:
+    0 5px 15px rgba(0,0,0,.15);
+
+}
+
+
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:28px;
+
+    font-weight:700;
+
+}
+
+
+
+.logo i{
+
+    font-size:34px;
+
+}
+
+
+
+nav ul{
+
+    display:flex;
+
+    list-style:none;
+
+    gap:30px;
+
+}
+
+
+
+nav ul li a{
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
+
+
+
+nav ul li a:hover{
+
+    color:#ffe082;
+
+}
+
+
+
+
+/* ===========================================
+   HERO
+=========================================== */
+
+
+.hero{
+
+    min-height:75vh;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:70px 8%;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    color:white;
+
+}
+
+
+
+.hero-text{
+
+    max-width:650px;
+
+}
+
+
+
+.hero h1{
+
+    font-size:60px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.hero h1 span{
+
+    color:#ffe082;
+
+}
+
+
+
+.hero p{
+
+    font-size:20px;
+
+    margin-bottom:40px;
+
+}
+
+
+
+.hero-button a{
+
+    display:inline-block;
+
+    padding:15px 35px;
+
+    background:white;
+
+    color:#2563eb;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+
+
+.hero-button a:hover{
+
+    transform:translateY(-5px);
+
+    background:#ffe082;
+
+}
+
+
+
+
+/* CHEMISTRY VISUAL */
+
+
+.hero-image{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+}
+
+
+
+.atom{
+
+    font-size:180px;
+
+    animation:rotate 8s linear infinite;
+
+}
+
+
+
+.formula{
+
+    margin-top:20px;
+
+    padding:12px 25px;
+
+    background:
+
+    rgba(255,255,255,.15);
+
+    border-radius:20px;
+
+    backdrop-filter:blur(10px);
+
+}
+
+
+
+@keyframes rotate{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+
+
+/* ===========================================
+   STATS
+=========================================== */
+
+
+.stats{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:70px;
+
+    padding:60px 8%;
+
+    background:white;
+
+}
+
+
+
+.stat{
+
+    text-align:center;
+
+}
+
+
+
+.stat h2{
+
+    font-size:45px;
+
+    color:#2563eb;
+
+}
+
+
+
+.stat p{
+
+    color:#666;
+
+    font-size:18px;
+
+}
+
+
+
+
+/* ===========================================
+   FEATURE
+=========================================== */
+
+
+.feature{
+
+    padding:80px 8%;
+
+}
+
+
+
+.feature h2{
+
+    text-align:center;
+
+    font-size:40px;
+
+    margin-bottom:50px;
+
+}
+
+
+
+.card-container{
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(auto-fit,minmax(260px,1fr));
+
+    gap:30px;
+
+}
+
+
+
+.card{
+
+    display:block;
+
+    text-decoration:none;
+
+    color:#222;
+
+    background:white;
+
+    padding:35px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    transition:.35s;
+
+    box-shadow:
+
+    0 10px 30px rgba(0,0,0,.08);
+
+}
+
+
+
+.card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:
+
+    0 18px 40px rgba(0,0,0,.18);
+
+}
+
+
+
+.card i{
+
+    font-size:50px;
+
+    color:#2563eb;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.card h3{
+
+    font-size:24px;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.card p{
+
+    color:#666;
+
+}
+
+
+
+
+/* ===========================================
+   ABOUT
+=========================================== */
+
+
+.about{
+
+    padding:80px 10%;
+
+    text-align:center;
+
+}
+
+
+
+.about h2{
+
+    font-size:40px;
+
+    margin-bottom:25px;
+
+}
+
+
+
+.about p{
+
+    max-width:800px;
+
+    margin:auto;
+
+    font-size:18px;
+
+    color:#555;
+
+}
+
+
+
+
+/* ===========================================
+   QUOTE
+=========================================== */
+
+
+.quote{
+
+    padding:80px 20px;
+
+    background:white;
+
+    text-align:center;
+
+}
+
+
+
+.quote blockquote{
+
+    max-width:900px;
+
+    margin:auto;
+
+    font-size:28px;
+
+    font-style:italic;
+
+    color:#2563eb;
+
+}
+
+
+
+
+/* ===========================================
+   FOOTER
+=========================================== */
+
+
+footer{
+
+    background:#2563eb;
+
+    color:white;
+
+    text-align:center;
+
+    padding:40px 20px;
+
+}
+
+
+
+footer h3{
+
+    font-size:28px;
+
+    margin-bottom:15px;
+
+}
+
+
+
+
+/* ===========================================
+   PAGE OTHER
+=========================================== */
+
+
+.page{
+
+    min-height:70vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+    text-align:center;
+
+    padding:60px 20px;
+
+}
+
+
+
+.page h1{
+
+    font-size:50px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.page p{
+
+    font-size:20px;
+
+    color:#555;
+
+}
+
+
+
+
+/* ===========================================
+   SCROLLBAR
+=========================================== */
+
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+
+::-webkit-scrollbar-track{
+
+    background:#dbeafe;
+
+}
+
+
+::-webkit-scrollbar-thumb{
+
+    background:#2563eb;
+
+    border-radius:10px;
+
+}
+
+
+
+
+/* ===========================================
+   RESPONSIVE
+=========================================== */
+
+
+@media(max-width:900px){
+
+
+nav{
+
+    flex-direction:column;
+
+    height:auto;
+
+    padding:20px;
+
+}
+
+
+
+nav ul{
+
+    margin-top:20px;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+}
+
+
+
+.hero{
+
+    flex-direction:column;
+
+    text-align:center;
+
+}
+
+
+
+.hero h1{
+
+    font-size:42px;
+
+}
+
+
+
+.hero-image{
+
+    margin-top:40px;
+
+}
+
+
+
+.atom{
+
+    font-size:120px;
+
+}
+
+
+
+.stats{
+
+    flex-direction:column;
+
+    gap:30px;
+
+}
+
+
+}
+
+
+
+@media(max-width:600px){
+
+
+.hero h1{
+
+    font-size:34px;
+
+}
+
+
+
+.hero p{
+
+    font-size:16px;
+
+}
+
+
+
+.card{
+
+    padding:25px;
+
+}
+
+
+.card i{
+
+    font-size:40px;
+
+}
+
+
+
+.feature h2,
+.about h2{
+
+    font-size:32px;
+
+}
+
+
+}
+/* ===========================================
+   PERIODIC TABLE
+=========================================== */
+
+
+.periodic-container{
+
+    padding:80px 5%;
+
+}
+
+
+.title{
+
+    text-align:center;
+
+    margin-bottom:50px;
+
+}
+
+
+.title h1{
+
+    font-size:45px;
+
+    color:#2563eb;
+
+}
+
+
+.title p{
+
+    color:#666;
+
+    font-size:18px;
+
+}
+
+
+
+.periodic-wrapper{
+
+    display:flex;
+
+    gap:40px;
+
+    align-items:flex-start;
+
+}
+
+
+
+/* TABLE */
+
+
+.periodic-table{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(18,65px);
+
+    gap:8px;
+
+    overflow-x:auto;
+
+}
+
+
+
+.element{
+
+    width:65px;
+
+    height:75px;
+
+    background:white;
+
+    border-radius:10px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    box-shadow:
+    0 5px 15px rgba(0,0,0,.1);
+
+}
+
+
+
+.element:hover{
+
+    transform:translateY(-6px) scale(1.05);
+
+}
+
+
+
+.element h2{
+
+    font-size:25px;
+
+    color:#2563eb;
+
+}
+
+
+
+.number{
+
+    font-size:11px;
+
+    color:#777;
+
+}
+
+
+
+.name{
+
+    font-size:10px;
+
+    text-align:center;
+
+}
+
+
+
+
+.empty{
+
+    width:65px;
+
+    height:75px;
+
+}
+
+
+
+
+
+/* ELEMENT COLORS */
+
+
+.nonmetal{
+
+    border-top:4px solid #22c55e;
+
+}
+
+
+.noble-gas{
+
+    border-top:4px solid #a855f7;
+
+}
+
+
+.alkali{
+
+    border-top:4px solid #ef4444;
+
+}
+
+
+.alkaline{
+
+    border-top:4px solid #f97316;
+
+}
+
+
+.metalloid{
+
+    border-top:4px solid #eab308;
+
+}
+
+
+.halogen{
+
+    border-top:4px solid #14b8a6;
+
+}
+
+
+.post-transition{
+
+    border-top:4px solid #3b82f6;
+
+}
+
+
+
+/* INFORMATION */
+
+
+.info-panel{
+
+    width:350px;
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:
+
+    0 10px 30px rgba(0,0,0,.1);
+
+}
+
+
+
+.info-panel h2{
+
+    color:#2563eb;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.info-box{
+
+    text-align:center;
+
+}
+
+
+
+.info-box h1{
+
+    font-size:70px;
+
+    color:#2563eb;
+
+}
+
+
+
+.info-box h3{
+
+    font-size:25px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.info-box p{
+
+    text-align:left;
+
+    margin:10px 0;
+
+    color:#555;
+
+}
+
+
+
+
+/* RESPONSIVE */
+
+
+@media(max-width:1200px){
+
+    .periodic-wrapper{
+
+        flex-direction:column;
+
+    }
+
+
+    .info-panel{
+
+        width:100%;
+
+    }
+
+}
+/* ===========================================
+   MOLE CALCULATOR
+=========================================== */
+.calculator{
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  margin-top: 40px;
+  transition: .35s;
+}
+
+.calculator:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 40px rgba(0,0,0,.15);
+}
+
+.calculator .input-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.calculator label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #222;
+  font-size: 15px;
+}
+
+.calculator input{
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  transition: .25s;
+  font-family: 'Poppins', sans-serif;
+}
+
+.calculator input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.calculator button{
+  width: 100%;
+  padding: 14px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: .3s;
+  font-family: 'Poppins', sans-serif;
+}
+
+.calculator button:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+.calculator button:nth-child(even) {
+  background: #64748b;
+  margin-top: 10px;
+}
+
+.calculator button:nth-child(even):hover {
+  background: #475569;
+}
+
+.result{
+  margin-top: 25px;
+  padding: 20px;
+  background: #eef4ff;
+  border-radius: 15px;
+  border-left: 4px solid #2563eb;
+  text-align: left;
+}
+
+.result h2 {
+  font-size: 20px;
+  color: #2563eb;
+  margin-bottom: 10px;
+}
+
+.result p {
+  font-size: 15px;
+  color: #333;
+  font-weight: 500;
+}

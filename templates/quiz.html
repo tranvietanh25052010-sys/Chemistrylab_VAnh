@@ -1,0 +1,190 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Chemistry Quiz
+{% endblock %}
+
+{% block content %}
+<section class="page">
+  <h1>🧪 Chemistry Quiz</h1>
+  <p>Test your chemistry knowledge — over 100+ questions available!</p>
+
+  <div id="start-screen" class="quiz-box">
+    <h2>Ready to start?</h2>
+    <p>10 random questions per round · 100+ total questions</p>
+    <button onclick="startQuiz()" class="quiz-btn">Start Quiz</button>
+  </div>
+
+  <div id="quiz-screen" class="quiz-box" style="display:none;">
+    <div class="quiz-header">
+      <span id="q-count">Question 1 / 10</span>
+      <span id="score">Score: 0</span>
+    </div>
+    <h3 id="question"></h3>
+    <div id="options" class="options"></div>
+    <button id="next-btn" onclick="nextQuestion()" style="display:none;" class="quiz-btn">Next →</button>
+  </div>
+
+  <div id="result-screen" class="quiz-box" style="display:none;">
+    <h2>Quiz Complete!</h2>
+    <div class="final-score">
+      <span id="final-score"></span>
+    </div>
+    <p id="comment"></p>
+    <button onclick="location.reload()" class="quiz-btn">Try Another Round</button>
+  </div>
+</section>
+
+<style>
+/* Giữ nguyên toàn bộ CSS cũ mình đã gửi */
+.quiz-box {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  margin-top: 30px;
+  text-align: center;
+}
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  font-weight: 600;
+  color: #2563eb;
+}
+#question {
+  font-size: 20px;
+  margin-bottom: 25px;
+  color: #222;
+  line-height: 1.5;
+}
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.option {
+  padding: 14px 18px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: .25s;
+  font-weight: 500;
+}
+.option:hover:not(.disabled) {
+  border-color: #2563eb;
+  background: #eef4ff;
+}
+.option.correct {
+  border-color: #22c55e;
+  background: #f0fdf4;
+  color: #166534;
+}
+.option.wrong {
+  border-color: #ef4444;
+  background: #fef2f2;
+  color: #991b1b;
+}
+.option.disabled {
+  cursor: default;
+}
+.quiz-btn {
+  padding: 12px 30px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .3s;
+}
+.quiz-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+.final-score {
+  font-size: 48px;
+  font-weight: 800;
+  color: #2563eb;
+  margin: 20px 0;
+}
+#comment {
+  font-size: 17px;
+  color: #555;
+  margin-bottom: 25px;
+}
+</style>
+
+<!-- Gọi file chứa 100+ câu hỏi TRƯỚC khi chạy logic -->
+<script src="{{ url_for('static', filename='js/questions.js') }}"></script>
+<script>
+let questions = [];
+let currentQ = 0;
+let score = 0;
+
+function startQuiz() {
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  // Lấy 10 câu ngẫu nhiên từ 100+ câu
+  questions = getRandomQuestions(10);
+  currentQ = 0;
+  score = 0;
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQ];
+  document.getElementById('q-count').textContent = `Question ${currentQ+1} / ${questions.length}`;
+  document.getElementById('score').textContent = `Score: ${score}`;
+  document.getElementById('question').textContent = q.q;
+  document.getElementById('options').innerHTML = '';
+  document.getElementById('next-btn').style.display = 'none';
+
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement('div');
+    btn.className = 'option';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(idx, q.answer);
+    document.getElementById('options').appendChild(btn);
+  });
+}
+
+function selectAnswer(selected, correct) {
+  const opts = document.querySelectorAll('.option');
+  opts.forEach(o => o.classList.add('disabled'));
+  opts[correct].classList.add('correct');
+  if(selected !== correct) opts[selected].classList.add('wrong');
+  if(selected === correct) score++;
+  document.getElementById('score').textContent = `Score: ${score}`;
+  document.getElementById('next-btn').style.display = 'block';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if(currentQ < questions.length) showQuestion();
+  else showResult();
+}
+
+function showResult() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'block';
+  const percent = Math.round((score / questions.length) * 100);
+  document.getElementById('final-score').textContent = `${score} / ${questions.length}`;
+  
+  let comment;
+  if(percent >= 90) comment = "🌟 Excellent! You're a chemistry pro!";
+  else if(percent >= 70) comment = "👍 Great job! Solid knowledge!";
+  else if(percent >= 50) comment = "🙂 Good effort! Keep practicing!";
+  else comment = "💪 Don't give up! Review and try again!";
+  
+  document.getElementById('comment').textContent = comment;
+}
+</script>
+{% endblock %}
