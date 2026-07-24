@@ -61,9 +61,12 @@
     </nav>
 
     <!-- ========================= -->
-    <!-- Google Translate Button: Top-Right Always Visible -->
+    <!-- Nút Đổi Giao Diện + Dịch: Góc Trên Phải Luôn Thấy -->
     <!-- ========================= -->
-    <div style="position: fixed; top: 12px; right: 20px; z-index: 9999;">
+    <div style="position: fixed; top: 12px; right: 20px; z-index: 9999; display: flex; gap: 12px; align-items: center;">
+        <button id="theme-toggle" style="background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.25s;">
+            <i class="fa-solid fa-moon"></i>
+        </button>
         <div id="google_translate_element"></div>
     </div>
 
@@ -93,7 +96,28 @@
     <!-- ========================= -->
     <script src="{{ url_for('static', filename='js/home.js') }}"></script>
 
-    <!-- Google Translate Script -->
+    <!-- Dark Mode Toggle -->
+    <script>
+        const toggle = document.getElementById('theme-toggle');
+        const icon = toggle.querySelector('i');
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        function setTheme(isDark) {
+            document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+            icon.className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        setTheme(saved === 'dark' || (!saved && prefersDark));
+
+        toggle.addEventListener('click', () => {
+            const now = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(!now);
+        });
+    </script>
+
+    <!-- Google Translate -->
     <script type="text/javascript">
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({
