@@ -5,7 +5,7 @@ Periodic Table
 {% endblock %}
 
 {% block content %}
-<section class="periodic-container">
+<section class="periodic-container notranslate">
   <div class="title">
     <h1>Periodic Table of Elements</h1>
     <p>118 elements · Click any element to view details</p>
@@ -20,7 +20,7 @@ Periodic Table
 </section>
 
 <!-- Element Detail Panel -->
-<div id="panel-overlay">
+<div id="panel-overlay" class="notranslate">
   <div id="panel">
     <button class="close" onclick="closePanel()">&times;</button>
     <div class="big-symbol" id="p-sym"></div>
@@ -58,6 +58,17 @@ Periodic Table
   * {
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  [data-theme="dark"] {
+    --primary: #3b82f6;
+    --primary-light: #1e293b;
+    --primary-dark: #60a5fa;
+    --text-main: #f1f5f9;
+    --text-soft: #94a3b8;
+    --bg-card: #1e293b;
+    --border-soft: #475569;
   }
 
   .periodic-container {
@@ -91,6 +102,8 @@ Periodic Table
     border-radius: 10px;
     font-size: 14px;
     transition: 0.25s;
+    background: var(--bg-card);
+    color: var(--text-main);
   }
 
   #search:focus {
@@ -118,6 +131,7 @@ Periodic Table
     font-size: 12px;
     cursor: pointer;
     transition: 0.25s;
+    color: var(--text-main);
   }
 
   .legend button:hover { transform: translateY(-1px); }
@@ -231,6 +245,7 @@ Periodic Table
     padding: 28px;
     box-shadow: 0 12px 35px rgba(0,0,0,0.12);
     position: relative;
+    color: var(--text-main);
   }
 
   .close {
