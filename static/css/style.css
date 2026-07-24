@@ -710,3 +710,82 @@ footer h3{
     .element{ width:50px; height:60px; }
     .element h2{ font-size:20px; }
 }
+/* ===========================================
+   QUIZ - CSS RIÊNG, TỰ ĐỘNG ĐỔI MÀU + CHỮ ĐẬM NÉT
+=========================================== */
+.quiz-container,
+.quiz-box,
+.question-card {
+    background: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border: 2px solid var(--border) !important;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s ease;
+}
+
+.quiz-question,
+.question-text {
+    font-size: 22px !important;
+    font-weight: 700 !important; /* Đậm nhất */
+    color: var(--text-main) !important;
+    opacity: 1 !important;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.quiz-option,
+.answer-option,
+.option {
+    background: var(--bg-soft) !important;
+    color: var(--text-main) !important;
+    border: 2px solid var(--border) !important;
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 12px;
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    opacity: 1 !important;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.quiz-option:hover,
+.answer-option:hover {
+    background: var(--primary-light) !important;
+    border-color: var(--primary) !important;
+}
+
+.quiz-option.correct,
+.answer-option.correct {
+    background: rgba(34, 197, 94, 0.15) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    font-weight: 700 !important;
+}
+
+.quiz-option.wrong,
+.answer-option.wrong {
+    background: rgba(239, 68, 68, 0.15) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    font-weight: 700 !important;
+}
+
+.quiz-result,
+.result-box {
+    background: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border: 2px solid var(--border) !important;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 20px;
+}
+
+.quiz-result *,
+.result-box * {
+    color: var(--text-main) !important;
+    font-weight: 600 !important;
+    opacity: 1 !important;
+}
