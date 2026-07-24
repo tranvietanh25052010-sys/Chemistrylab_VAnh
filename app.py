@@ -19,7 +19,7 @@ if not os.path.exists(LOG_FILE):
 @app.before_request
 def check_name():
     # Public routes that do not require a name
-    public_routes = ["/enter-name", "/admin-logs-chemlab-2026"]
+    public_routes = ["/nhap_ten", "/admin-logs-chemlab-2026"]
     if "username" not in session and request.path not in public_routes:
         return redirect("/enter-name")
 
@@ -48,7 +48,7 @@ def enter_name():
         if name_input:
             session["username"] = name_input
             return redirect("/")
-    return render_template("enter_name.html")
+    return render_template("nhap_ten.html")
 
 # ==========================================
 # Main Pages
