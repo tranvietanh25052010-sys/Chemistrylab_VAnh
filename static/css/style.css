@@ -1,1053 +1,486 @@
 /* ===========================================
+   BIẾN MÀU & CHẾ ĐỘ SÁNG/TỐI
+=========================================== */
+:root {
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --primary-dark: #1d4ed8;
+    --accent: #ffe082;
+    --success: #16a34a;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+
+    /* Mặc định Sáng */
+    --bg-main: #eef4ff;
+    --bg-card: #ffffff;
+    --bg-soft: #f8fafc;
+    --text-main: #222222;
+    --text-soft: #666666;
+    --text-muted: #555555;
+    --border: #e2e8f0;
+    --shadow: 0 5px 15px rgba(0,0,0,.15);
+    --shadow-soft: 0 10px 30px rgba(0,0,0,.08);
+}
+
+/* CHẾ ĐỘ TỐI */
+[data-theme="dark"] {
+    --primary: #3b82f6;
+    --primary-light: #1e293b;
+    --primary-dark: #60a5fa;
+    --accent: #fbbf24;
+    --success: #22c55e;
+    --danger: #f87171;
+    --warning: #fcd34d;
+
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --bg-soft: #334155;
+    --text-main: #f1f5f9;
+    --text-soft: #94a3b8;
+    --text-muted: #cbd5e1;
+    --border: #475569;
+    --shadow: 0 5px 15px rgba(0,0,0,.35);
+    --shadow-soft: 0 10px 30px rgba(0,0,0,.25);
+}
+
+/* ===========================================
    RESET
 =========================================== */
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
     font-family:'Poppins',sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 html{
     scroll-behavior:smooth;
 }
 
-
 body{
-
-    background:#eef4ff;
-
-    color:#222;
-
+    background:var(--bg-main);
+    color:var(--text-main);
     line-height:1.6;
-
 }
-
-
 
 /* ===========================================
    NAVBAR
 =========================================== */
-
-
 nav{
-
     width:100%;
-
     height:80px;
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     padding:0 8%;
-
-    background:#2563eb;
-
+    background:var(--primary);
     color:white;
-
     position:sticky;
-
     top:0;
-
     z-index:1000;
-
-    box-shadow:
-    0 5px 15px rgba(0,0,0,.15);
-
+    box-shadow:var(--shadow);
 }
-
-
 
 .logo{
-
     display:flex;
-
     align-items:center;
-
     gap:10px;
-
     font-size:28px;
-
     font-weight:700;
-
 }
-
-
 
 .logo i{
-
     font-size:34px;
-
 }
-
-
 
 nav ul{
-
     display:flex;
-
     list-style:none;
-
     gap:30px;
-
 }
-
-
 
 nav ul li a{
-
     color:white;
-
     text-decoration:none;
-
     font-weight:500;
-
     transition:.3s;
-
 }
-
-
 
 nav ul li a:hover{
-
-    color:#ffe082;
-
+    color:var(--accent);
 }
-
-
-
 
 /* ===========================================
    HERO
 =========================================== */
-
-
 .hero{
-
     min-height:75vh;
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     padding:70px 8%;
-
-    background:
-
-    linear-gradient(
-        135deg,
-        #2563eb,
-        #4f46e5
-    );
-
+    background:linear-gradient(135deg, var(--primary), #4f46e5);
     color:white;
-
 }
-
-
 
 .hero-text{
-
     max-width:650px;
-
 }
-
-
 
 .hero h1{
-
     font-size:60px;
-
     margin-bottom:20px;
-
 }
-
-
 
 .hero h1 span{
-
-    color:#ffe082;
-
+    color:var(--accent);
 }
-
-
 
 .hero p{
-
     font-size:20px;
-
     margin-bottom:40px;
-
 }
-
-
 
 .hero-button a{
-
     display:inline-block;
-
     padding:15px 35px;
-
     background:white;
-
-    color:#2563eb;
-
+    color:var(--primary);
     border-radius:12px;
-
     text-decoration:none;
-
     font-weight:600;
-
     transition:.3s;
-
 }
-
-
 
 .hero-button a:hover{
-
     transform:translateY(-5px);
-
-    background:#ffe082;
-
+    background:var(--accent);
+    color:var(--primary-dark);
 }
-
-
-
 
 /* CHEMISTRY VISUAL */
-
-
 .hero-image{
-
     display:flex;
-
     flex-direction:column;
-
     align-items:center;
-
 }
-
-
 
 .atom{
-
     font-size:180px;
-
     animation:rotate 8s linear infinite;
-
 }
-
-
 
 .formula{
-
     margin-top:20px;
-
     padding:12px 25px;
-
-    background:
-
-    rgba(255,255,255,.15);
-
+    background:rgba(255,255,255,.15);
     border-radius:20px;
-
     backdrop-filter:blur(10px);
-
 }
-
-
 
 @keyframes rotate{
-
-    from{
-
-        transform:rotate(0deg);
-
-    }
-
-
-    to{
-
-        transform:rotate(360deg);
-
-    }
-
+    from{ transform:rotate(0deg); }
+    to{ transform:rotate(360deg); }
 }
-
-
-
 
 /* ===========================================
    STATS
 =========================================== */
-
-
 .stats{
-
     display:flex;
-
     justify-content:center;
-
     gap:70px;
-
     padding:60px 8%;
-
-    background:white;
-
+    background:var(--bg-card);
 }
-
-
 
 .stat{
-
     text-align:center;
-
 }
-
-
 
 .stat h2{
-
     font-size:45px;
-
-    color:#2563eb;
-
+    color:var(--primary);
 }
-
-
 
 .stat p{
-
-    color:#666;
-
+    color:var(--text-soft);
     font-size:18px;
-
 }
-
-
-
 
 /* ===========================================
    FEATURE
 =========================================== */
-
-
 .feature{
-
     padding:80px 8%;
-
 }
-
-
 
 .feature h2{
-
     text-align:center;
-
     font-size:40px;
-
     margin-bottom:50px;
-
+    color:var(--text-main);
 }
-
-
 
 .card-container{
-
     display:grid;
-
-    grid-template-columns:
-
-    repeat(auto-fit,minmax(260px,1fr));
-
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     gap:30px;
-
 }
-
-
 
 .card{
-
     display:block;
-
     text-decoration:none;
-
-    color:#222;
-
-    background:white;
-
+    color:var(--text-main);
+    background:var(--bg-card);
     padding:35px;
-
     border-radius:20px;
-
     text-align:center;
-
     transition:.35s;
-
-    box-shadow:
-
-    0 10px 30px rgba(0,0,0,.08);
-
+    box-shadow:var(--shadow-soft);
 }
-
-
 
 .card:hover{
-
     transform:translateY(-10px);
-
-    box-shadow:
-
-    0 18px 40px rgba(0,0,0,.18);
-
+    box-shadow:0 18px 40px rgba(0,0,0,.18);
 }
-
-
 
 .card i{
-
     font-size:50px;
-
-    color:#2563eb;
-
+    color:var(--primary);
     margin-bottom:20px;
-
 }
-
-
 
 .card h3{
-
     font-size:24px;
-
     margin-bottom:15px;
-
 }
-
-
 
 .card p{
-
-    color:#666;
-
+    color:var(--text-soft);
 }
-
-
-
 
 /* ===========================================
    ABOUT
 =========================================== */
-
-
 .about{
-
     padding:80px 10%;
-
     text-align:center;
-
 }
-
-
 
 .about h2{
-
     font-size:40px;
-
     margin-bottom:25px;
-
+    color:var(--text-main);
 }
-
-
 
 .about p{
-
     max-width:800px;
-
     margin:auto;
-
     font-size:18px;
-
-    color:#555;
-
+    color:var(--text-muted);
 }
-
-
-
 
 /* ===========================================
    QUOTE
 =========================================== */
-
-
 .quote{
-
     padding:80px 20px;
-
-    background:white;
-
+    background:var(--bg-card);
     text-align:center;
-
 }
-
-
 
 .quote blockquote{
-
     max-width:900px;
-
     margin:auto;
-
     font-size:28px;
-
     font-style:italic;
-
-    color:#2563eb;
-
+    color:var(--primary);
 }
-
-
-
 
 /* ===========================================
    FOOTER
 =========================================== */
-
-
 footer{
-
-    background:#2563eb;
-
+    background:var(--primary);
     color:white;
-
     text-align:center;
-
     padding:40px 20px;
-
 }
-
-
 
 footer h3{
-
     font-size:28px;
-
     margin-bottom:15px;
-
 }
-
-
-
 
 /* ===========================================
-   PAGE OTHER
+   TRANG CHUNG
 =========================================== */
-
-
 .page{
-
     min-height:70vh;
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
     flex-direction:column;
-
     text-align:center;
-
     padding:60px 20px;
-
 }
-
-
 
 .page h1{
-
     font-size:50px;
-
     margin-bottom:20px;
-
+    color:var(--text-main);
 }
-
-
 
 .page p{
-
     font-size:20px;
-
-    color:#555;
-
+    color:var(--text-muted);
 }
-
-
-
 
 /* ===========================================
-   SCROLLBAR
+   THANH CUỘN
 =========================================== */
-
-
 ::-webkit-scrollbar{
-
     width:10px;
-
 }
-
 
 ::-webkit-scrollbar-track{
-
-    background:#dbeafe;
-
+    background:var(--primary-light);
 }
-
 
 ::-webkit-scrollbar-thumb{
-
-    background:#2563eb;
-
+    background:var(--primary);
     border-radius:10px;
-
 }
-
-
-
 
 /* ===========================================
-   RESPONSIVE
+   BẢNG TUẦN HOÀN
 =========================================== */
-
-
-@media(max-width:900px){
-
-
-nav{
-
-    flex-direction:column;
-
-    height:auto;
-
-    padding:20px;
-
-}
-
-
-
-nav ul{
-
-    margin-top:20px;
-
-    flex-wrap:wrap;
-
-    justify-content:center;
-
-}
-
-
-
-.hero{
-
-    flex-direction:column;
-
-    text-align:center;
-
-}
-
-
-
-.hero h1{
-
-    font-size:42px;
-
-}
-
-
-
-.hero-image{
-
-    margin-top:40px;
-
-}
-
-
-
-.atom{
-
-    font-size:120px;
-
-}
-
-
-
-.stats{
-
-    flex-direction:column;
-
-    gap:30px;
-
-}
-
-
-}
-
-
-
-@media(max-width:600px){
-
-
-.hero h1{
-
-    font-size:34px;
-
-}
-
-
-
-.hero p{
-
-    font-size:16px;
-
-}
-
-
-
-.card{
-
-    padding:25px;
-
-}
-
-
-.card i{
-
-    font-size:40px;
-
-}
-
-
-
-.feature h2,
-.about h2{
-
-    font-size:32px;
-
-}
-
-
-}
-/* ===========================================
-   PERIODIC TABLE
-=========================================== */
-
-
 .periodic-container{
-
     padding:80px 5%;
-
 }
-
 
 .title{
-
     text-align:center;
-
     margin-bottom:50px;
-
 }
-
 
 .title h1{
-
     font-size:45px;
-
-    color:#2563eb;
-
+    color:var(--primary);
 }
-
 
 .title p{
-
-    color:#666;
-
+    color:var(--text-soft);
     font-size:18px;
-
 }
-
-
 
 .periodic-wrapper{
-
     display:flex;
-
     gap:40px;
-
     align-items:flex-start;
-
 }
-
-
-
-/* TABLE */
-
 
 .periodic-table{
-
     display:grid;
-
-    grid-template-columns:
-    repeat(18,65px);
-
+    grid-template-columns:repeat(18,65px);
     gap:8px;
-
     overflow-x:auto;
-
 }
-
-
 
 .element{
-
     width:65px;
-
     height:75px;
-
-    background:white;
-
+    background:var(--bg-card);
     border-radius:10px;
-
     display:flex;
-
     flex-direction:column;
-
     justify-content:center;
-
     align-items:center;
-
     cursor:pointer;
-
     transition:.25s;
-
-    box-shadow:
-    0 5px 15px rgba(0,0,0,.1);
-
+    box-shadow:var(--shadow-soft);
 }
-
-
 
 .element:hover{
-
     transform:translateY(-6px) scale(1.05);
-
 }
-
-
 
 .element h2{
-
     font-size:25px;
-
-    color:#2563eb;
-
+    color:var(--primary);
 }
-
-
 
 .number{
-
     font-size:11px;
-
-    color:#777;
-
+    color:var(--text-soft);
 }
-
-
 
 .name{
-
     font-size:10px;
-
     text-align:center;
-
+    color:var(--text-muted);
 }
-
-
-
 
 .empty{
-
     width:65px;
-
     height:75px;
-
 }
 
-
-
-
-
-/* ELEMENT COLORS */
-
-
-.nonmetal{
-
-    border-top:4px solid #22c55e;
-
-}
-
-
-.noble-gas{
-
-    border-top:4px solid #a855f7;
-
-}
-
-
-.alkali{
-
-    border-top:4px solid #ef4444;
-
-}
-
-
-.alkaline{
-
-    border-top:4px solid #f97316;
-
-}
-
-
-.metalloid{
-
-    border-top:4px solid #eab308;
-
-}
-
-
-.halogen{
-
-    border-top:4px solid #14b8a6;
-
-}
-
-
-.post-transition{
-
-    border-top:4px solid #3b82f6;
-
-}
-
-
-
-/* INFORMATION */
-
+/* NHÓM NGUYÊN TỐ */
+.nonmetal{ border-top:4px solid #22c55e; }
+.noble-gas{ border-top:4px solid #a855f7; }
+.alkali{ border-top:4px solid #ef4444; }
+.alkaline{ border-top:4px solid #f97316; }
+.metalloid{ border-top:4px solid #eab308; }
+.halogen{ border-top:4px solid #14b8a6; }
+.post-transition{ border-top:4px solid #3b82f6; }
 
 .info-panel{
-
     width:350px;
-
-    background:white;
-
+    background:var(--bg-card);
     padding:30px;
-
     border-radius:20px;
-
-    box-shadow:
-
-    0 10px 30px rgba(0,0,0,.1);
-
+    box-shadow:var(--shadow-soft);
 }
-
-
 
 .info-panel h2{
-
-    color:#2563eb;
-
+    color:var(--primary);
     margin-bottom:20px;
-
 }
-
-
 
 .info-box{
-
     text-align:center;
-
 }
-
-
 
 .info-box h1{
-
     font-size:70px;
-
-    color:#2563eb;
-
+    color:var(--primary);
 }
-
-
 
 .info-box h3{
-
     font-size:25px;
-
     margin-bottom:20px;
-
+    color:var(--text-main);
 }
-
-
 
 .info-box p{
-
     text-align:left;
-
     margin:10px 0;
-
-    color:#555;
-
+    color:var(--text-muted);
 }
 
-
-
-
-/* RESPONSIVE */
-
-
-@media(max-width:1200px){
-
-    .periodic-wrapper{
-
-        flex-direction:column;
-
-    }
-
-
-    .info-panel{
-
-        width:100%;
-
-    }
-
-}
 /* ===========================================
-   MOLE CALCULATOR
+   MÁY TÍNH & CÔNG CỤ
 =========================================== */
 .calculator{
-  background: white;
+  background: var(--bg-card);
   padding: 40px;
   border-radius: 20px;
   width: 100%;
   max-width: 420px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  box-shadow: var(--shadow-soft);
   margin-top: 40px;
   transition: .35s;
 }
@@ -1066,7 +499,7 @@ nav ul{
   display: block;
   margin-bottom: 6px;
   font-weight: 600;
-  color: #222;
+  color: var(--text-main);
   font-size: 15px;
 }
 
@@ -1074,22 +507,24 @@ nav ul{
   width: 100%;
   padding: 12px 15px;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
   font-size: 15px;
   transition: .25s;
   font-family: 'Poppins', sans-serif;
+  background: var(--bg-soft);
+  color: var(--text-main);
 }
 
 .calculator input:focus {
   outline: none;
-  border-color: #2563eb;
+  border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .calculator button{
   width: 100%;
   padding: 14px;
-  background: #2563eb;
+  background: var(--primary);
   color: white;
   border: none;
   border-radius: 10px;
@@ -1102,7 +537,7 @@ nav ul{
 }
 
 .calculator button:hover {
-  background: #1d4ed8;
+  background: var(--primary-dark);
   transform: translateY(-2px);
 }
 
@@ -1118,20 +553,88 @@ nav ul{
 .result{
   margin-top: 25px;
   padding: 20px;
-  background: #eef4ff;
+  background: var(--primary-light);
   border-radius: 15px;
-  border-left: 4px solid #2563eb;
+  border-left: 4px solid var(--primary);
   text-align: left;
 }
 
 .result h2 {
   font-size: 20px;
-  color: #2563eb;
+  color: var(--primary);
   margin-bottom: 10px;
 }
 
 .result p {
   font-size: 15px;
-  color: #333;
+  color: var(--text-main);
   font-weight: 500;
+}
+
+.result-box {
+  margin-top: 20px;
+  padding: 18px;
+  background: var(--primary-light);
+  border: 1px solid var(--primary);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.result-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.result-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  letter-spacing: 0.5px;
+}
+
+.element-list {
+  text-align: left;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  font-size: 14px;
+}
+
+.element-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  color: var(--text-main);
+}
+
+.element-item span:first-child { font-weight: 500; }
+
+/* ===========================================
+   PHỤC VỤ DI ĐỘNG
+=========================================== */
+@media(max-width:1200px){
+    .periodic-wrapper{ flex-direction:column; }
+    .info-panel{ width:100%; }
+}
+
+@media(max-width:900px){
+    nav{ flex-direction:column; height:auto; padding:20px; }
+    nav ul{ margin-top:20px; flex-wrap:wrap; justify-content:center; }
+    .hero{ flex-direction:column; text-align:center; }
+    .hero h1{ font-size:42px; }
+    .hero-image{ margin-top:40px; }
+    .atom{ font-size:120px; }
+    .stats{ flex-direction:column; gap:30px; }
+}
+
+@media(max-width:600px){
+    .hero h1{ font-size:34px; }
+    .hero p{ font-size:16px; }
+    .card{ padding:25px; }
+    .card i{ font-size:40px; }
+    .feature h2, .about h2{ font-size:32px; }
+    .periodic-table{ grid-template-columns:repeat(18, 50px); gap:5px; }
+    .element{ width:50px; height:60px; }
+    .element h2{ font-size:20px; }
 }
