@@ -110,6 +110,20 @@ nav ul li a{
 nav ul li a:hover{
     color:var(--accent);
 }
+/* ===========================
+   SỬA: CHỪA CHỖ CHO NÚT NGÔN NGỮ + ĐỔI GIAO DIỆN
+============================ */
+nav ul {
+    padding-right: 150px; /* Chừa đủ rộng cho 2 nút bên phải */
+    gap: 28px; /* Giữ khoảng cách đều giữa các mục */
+}
+
+/* Khi thu nhỏ màn hình */
+@media(max-width:900px){
+    nav ul {
+        padding-right: 0; /* Trên di động menu xếp dưới logo nên không cần chừa */
+    }
+}
 
 /* ===========================================
    HERO
