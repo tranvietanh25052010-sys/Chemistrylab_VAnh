@@ -21,7 +21,7 @@ def check_name():
     # Public routes that do not require a name
     public_routes = ["/nhap_ten", "/admin-logs-chemlab-2026"]
     if "username" not in session and request.path not in public_routes:
-        return redirect("/enter-name")
+        return redirect("/nhap_ten")
 
 # ==========================================
 # Log all visits with username
@@ -41,7 +41,7 @@ def log_access():
 # ==========================================
 # Enter Name Page
 # ==========================================
-@app.route("/enter-name", methods=["GET", "POST"])
+@app.route("/nhap_ten", methods=["GET", "POST"])
 def enter_name():
     if request.method == "POST":
         name_input = request.form.get("name", "").strip()
