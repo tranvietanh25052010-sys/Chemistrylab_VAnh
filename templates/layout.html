@@ -2,18 +2,15 @@
 <html lang="en">
 
 <head>
-
     <!-- ========================= -->
     <!-- Basic Meta -->
     <!-- ========================= -->
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- ========================= -->
     <!-- Website Title -->
     <!-- ========================= -->
-
     <title>
         {% block title %}
         ChemLab
@@ -23,166 +20,72 @@
     <!-- ========================= -->
     <!-- Favicon -->
     <!-- ========================= -->
-
-    <link rel="icon"
-        href="{{ url_for('static', filename='images/logo.png') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}">
 
     <!-- ========================= -->
     <!-- Google Font -->
     <!-- ========================= -->
-
-    <link rel="preconnect"
-        href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- ========================= -->
     <!-- Main CSS -->
     <!-- ========================= -->
-
-    <link rel="stylesheet"
-        href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <!-- ========================= -->
     <!-- Font Awesome -->
     <!-- ========================= -->
-
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
-
     <!-- ========================= -->
     <!-- Navbar -->
     <!-- ========================= -->
-
     <nav>
-
         <div class="logo">
-
             <i class="fa-solid fa-atom"></i>
-
             <span>ChemLab</span>
-
         </div>
 
         <ul>
-
-            <li>
-
-                <a href="{{ url_for('home') }}">
-
-                    Home
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('periodic') }}">
-
-                    Periodic
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('mol') }}">
-
-                    Mol Calc
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('equation') }}">
-
-                    Equation
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('compound') }}">
-
-                    Compound
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('quiz') }}">
-
-                    Quiz
-
-                </a>
-
-            </li>
-
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('periodic') }}">Periodic</a></li>
+            <li><a href="{{ url_for('mol') }}">Mol Calc</a></li>
+            <li><a href="{{ url_for('equation') }}">Equation</a></li>
+            <li><a href="{{ url_for('compound') }}">Compound</a></li>
+            <li><a href="{{ url_for('quiz') }}">Quiz</a></li>
         </ul>
-
     </nav>
+
+    <!-- ========================= -->
+    <!-- Google Translate Button: Top-Right Always Visible -->
+    <!-- ========================= -->
+    <div style="position: fixed; top: 12px; right: 20px; z-index: 9999;">
+        <div id="google_translate_element"></div>
+    </div>
 
     <!-- ========================= -->
     <!-- Main Content -->
     <!-- ========================= -->
-
     <main>
-
         {% block content %}
-
         {% endblock %}
-
     </main>
 
     <!-- ========================= -->
     <!-- Footer -->
     <!-- ========================= -->
-
     <footer>
-
         <h2>
-
             <i class="fa-solid fa-flask"></i>
-
             ChemLab
-
         </h2>
-
-        <p>
-
-            Learn Chemistry Smarter.
-
-        </p>
-
-        <p>
-
-            Made with by Trần Việt Anh
-
-        </p>
-
-        <p>
-
-            © 2026 ChemLab
-
-        </p>
-
+        <p>Learn Chemistry Smarter.</p>
+        <p>Made with by Trần Việt Anh</p>
+        <p>© 2026 ChemLab</p>
     </footer>
 
     <!-- ========================= -->
@@ -190,8 +93,7 @@
     <!-- ========================= -->
     <script src="{{ url_for('static', filename='js/home.js') }}"></script>
 
-    <!-- Google Translate Widget -->
-    <div id="google_translate_element"></div>
+    <!-- Google Translate Script -->
     <script type="text/javascript">
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({
@@ -202,6 +104,5 @@
     }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 </body>
 </html>
