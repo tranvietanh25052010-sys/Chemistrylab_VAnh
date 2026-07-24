@@ -1,7 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Chemistry Quiz
+{% endblock %}
+
+{% block content %}
+<section class="page">
+  <h1>🧪 Chemistry Quiz</h1>
+  <p>Test your chemistry knowledge — over 100+ questions available!</p>
+
+  <div id="start-screen" class="quiz-box">
+    <h2>Ready to start?</h2>
+    <p>10 random questions per round · 100+ total questions</p>
+    <button onclick="startQuiz()" class="quiz-btn">Start Quiz</button>
+  </div>
+
+  <div id="quiz-screen" class="quiz-box" style="display:none;">
+    <div class="quiz-header">
+      <span id="q-count">Question 1 / 10</span>
+      <span id="score">Score: 0</span>
+    </div>
+    <h3 id="question"></h3>
+    <div id="options" class="options"></div>
+    <button id="next-btn" onclick="nextQuestion()" style="display:none;" class="quiz-btn">Next →</button>
+  </div>
+
+  <div id="result-screen" class="quiz-box" style="display:none;">
+    <h2>Quiz Complete!</h2>
+    <div class="final-score">
+      <span id="final-score"></span>
+    </div>
+    <p id="comment"></p>
+    <button onclick="location.reload()" class="quiz-btn">Try Another Round</button>
+  </div>
+</section>
+
 <style>
-/* ===========================================
-   QUIZ - TỰ ĐỘNG ĐỔI MÀU SÁNG/TỐI, KHÔNG ĐEN THUI
-=========================================== */
 .quiz-box {
   background: var(--bg-card) !important;
   color: var(--text-main) !important;
@@ -78,7 +112,7 @@
 .quiz-btn {
   padding: 12px 30px;
   background: var(--primary) !important;
-  color: white !important;
+  color: #ffffff !important;
   border: none;
   border-radius: 10px;
   font-size: 16px;
@@ -106,3 +140,68 @@
   font-weight: 500 !important;
 }
 </style>
+
+<script src="{{ url_for('static', filename='js/questions.js') }}"></script>
+<script>
+let questions = [];
+let currentQ = 0;
+let score = 0;
+
+function startQuiz() {
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  questions = getRandomQuestions(10);
+  currentQ = 0;
+  score = 0;
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQ];
+  document.getElementById('q-count').textContent = `Question ${currentQ+1} / ${questions.length}`;
+  document.getElementById('score').textContent = `Score: ${score}`;
+  document.getElementById('question').textContent = q.q;
+  document.getElementById('options').innerHTML = '';
+  document.getElementById('next-btn').style.display = 'none';
+
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement('div');
+    btn.className = 'option';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(idx, q.answer);
+    document.getElementById('options').appendChild(btn);
+  });
+}
+
+function selectAnswer(selected, correct) {
+  const opts = document.querySelectorAll('.option');
+  opts.forEach(o => o.classList.add('disabled'));
+  opts[correct].classList.add('correct');
+  if(selected !== correct) opts[selected].classList.add('wrong');
+  if(selected === correct) score++;
+  document.getElementById('score').textContent = `Score: ${score}`;
+  document.getElementById('next-btn').style.display = 'block';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if(currentQ < questions.length) showQuestion();
+  else showResult();
+}
+
+function showResult() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'block';
+  const percent = Math.round((score / questions.length) * 100);
+  document.getElementById('final-score').textContent = `${score} / ${questions.length}`;
+  
+  let comment;
+  if(percent >= 90) comment = "🌟 Excellent! You're a chemistry pro!";
+  else if(percent >= 70) comment = "👍 Great job! Solid knowledge!";
+  else if(percent >= 50) comment = "🙂 Good effort! Keep practicing!";
+  else comment = "💪 Don't give up! Review and try again!";
+  
+  document.getElementById('comment').textContent = comment;
+}
+</script>
+{% endblock %}
