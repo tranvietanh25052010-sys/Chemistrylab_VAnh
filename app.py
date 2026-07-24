@@ -50,7 +50,7 @@ def enter_name():
         if name_input:
             session["username"] = name_input
             return redirect("/")
-    return render_template("enter_name.html")
+    return render_template("enter-name.html")
 
 # ==========================================
 # Main Pages
