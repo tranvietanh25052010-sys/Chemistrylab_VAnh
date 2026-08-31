@@ -146,7 +146,290 @@ function balanceEquation() {
   status.textContent = '✅ Balanced successfully!';
   status.style.color = '#16a34a';
 }
+function balanceEquation() {
+  const eq = document.getElementById('equation').value.trim();
+  const status = document.getElementById('status');
+  const resultBox = document.getElementById('result-box');
+  const balancedResult = document.getElementById('balanced-result');
 
+  resultBox.style.display = 'none';
+  status.textContent = '';
+
+  if (!eq.includes('=') && !eq.includes('→')) {
+    status.textContent = '⚠️ Please separate sides with "=" or "→"';
+    status.style.color = '#ef4444';
+    return;
+  }
+
+  const sides = eq.split(/=|→/).map(s => s.trim());
+
+  if (sides.length !== 2) {
+    status.textContent = '⚠️ Invalid equation format';
+    status.style.color = '#ef4444';
+    return;
+  }
+
+  const left = sides[0].split('+').map(s => s.trim()).filter(Boolean);
+  const right = sides[1].split('+').map(s => s.trim()).filter(Boolean);
+  const all = [...left, ...right];
+  const n = all.length;
+
+  if (n < 2) {
+    status.textContent = '⚠️ Need at least two substances';
+    status.style.color = '#ef4444';
+    return;
+  }
+
+  // =========================
+  // LẤY DANH SÁCH NGUYÊN TỐ
+  // =========================
+  const elements = new Set();
+
+  const counts = all.map(formula => {
+    const c = parseFormula(formula);
+
+    Object.keys(c).forEach(e => elements.add(e));
+
+    return c;
+  });
+
+  // Kiểm tra nguyên tố chỉ xuất hiện một vế
+  for (const e of elements) {
+    let leftCount = 0;
+    let rightCount = 0;
+
+    for (let i = 0; i < left.length; i++) {
+      leftCount += counts[i][e] || 0;
+    }
+
+    for (let i = 0; i < right.length; i++) {
+      rightCount += counts[left.length + i][e] || 0;
+    }
+
+    if (leftCount === 0 || rightCount === 0) {
+      status.textContent = `⚠️ Element ${e} only on one side`;
+      status.style.color = '#ef4444';
+      return;
+    }
+  }
+
+  // =========================
+  // TẠO MA TRẬN
+  // =========================
+
+  const elemList = [...elements];
+  const m = elemList.length;
+
+  const matrix = Array.from(
+    { length: m },
+    () => Array(n).fill(0)
+  );
+
+  for (let r = 0; r < m; r++) {
+    const e = elemList[r];
+
+    for (let c = 0; c < n; c++) {
+      const amount = counts[c][e] || 0;
+
+      matrix[r][c] =
+        c < left.length ? amount : -amount;
+    }
+  }
+
+  // =========================
+  // GAUSSIAN ELIMINATION
+  // =========================
+
+  const A = matrix.map(row => row.map(Number));
+
+  let pivotRow = 0;
+  const pivotCols = [];
+
+  for (let col = 0; col < n && pivotRow < m; col++) {
+
+    // Tìm pivot
+    let pivot = pivotRow;
+
+    for (let r = pivotRow + 1; r < m; r++) {
+      if (Math.abs(A[r][col]) > Math.abs(A[pivot][col])) {
+        pivot = r;
+      }
+    }
+
+    // Không có pivot
+    if (Math.abs(A[pivot][col]) < 1e-10) {
+      continue;
+    }
+
+    // Đổi hàng
+    [A[pivotRow], A[pivot]] =
+      [A[pivot], A[pivotRow]];
+
+    // Chuẩn hóa pivot
+    const pivotValue = A[pivotRow][col];
+
+    for (let c = 0; c < n; c++) {
+      A[pivotRow][c] /= pivotValue;
+    }
+
+    // Khử toàn bộ cột
+    for (let r = 0; r < m; r++) {
+      if (r === pivotRow) continue;
+
+      const factor = A[r][col];
+
+      if (Math.abs(factor) < 1e-10) continue;
+
+      for (let c = 0; c < n; c++) {
+        A[r][c] -= factor * A[pivotRow][c];
+      }
+    }
+
+    pivotCols.push(col);
+    pivotRow++;
+  }
+
+  // =========================
+  // TÌM FREE VARIABLE
+  // =========================
+
+  const pivotSet = new Set(pivotCols);
+
+  const freeCols = [];
+
+  for (let c = 0; c < n; c++) {
+    if (!pivotSet.has(c)) {
+      freeCols.push(c);
+    }
+  }
+
+  if (freeCols.length === 0) {
+    status.textContent = '❌ No valid balancing solution';
+    status.style.color = '#ef4444';
+    return;
+  }
+
+  // Chọn free variable = 1
+  const solution = Array(n).fill(0);
+  solution[freeCols[0]] = 1;
+
+  // =========================
+  // TÍNH CÁC HỆ SỐ PIVOT
+  // =========================
+
+  for (let i = pivotCols.length - 1; i >= 0; i--) {
+
+    const row = i;
+    const col = pivotCols[i];
+
+    let value = 0;
+
+    for (let c = 0; c < n; c++) {
+      if (c === col) continue;
+
+      value += A[row][c] * solution[c];
+    }
+
+    solution[col] = -value;
+  }
+
+  // =========================
+  // ĐỔI SANG SỐ NGUYÊN
+  // =========================
+
+  function gcdInt(a, b) {
+    a = Math.abs(Math.round(a));
+    b = Math.abs(Math.round(b));
+
+    while (b !== 0) {
+      [a, b] = [b, a % b];
+    }
+
+    return a;
+  }
+
+  function lcm(a, b) {
+    return Math.abs(a * b) / gcdInt(a, b);
+  }
+
+  // Tìm mẫu số chung
+  function denominator(x) {
+    const s = x.toString();
+
+    if (!s.includes('.')) return 1;
+
+    return Math.pow(
+      10,
+      s.split('.')[1].length
+    );
+  }
+
+  let commonDenominator = 1;
+
+  for (const x of solution) {
+    commonDenominator = lcm(
+      commonDenominator,
+      denominator(x)
+    );
+  }
+
+  let coeffs = solution.map(x =>
+    Math.round(x * commonDenominator)
+  );
+
+  // Đổi dấu nếu cần
+  const firstNonZero = coeffs.find(x => x !== 0);
+
+  if (firstNonZero < 0) {
+    coeffs = coeffs.map(x => -x);
+  }
+
+  // Rút gọn GCD
+  let g = coeffs[0];
+
+  for (let i = 1; i < coeffs.length; i++) {
+    g = gcdInt(g, coeffs[i]);
+  }
+
+  if (g === 0) {
+    status.textContent = '❌ Cannot balance this equation';
+    status.style.color = '#ef4444';
+    return;
+  }
+
+  coeffs = coeffs.map(x => Math.round(x / g));
+
+  // Kiểm tra hệ số dương
+  if (coeffs.some(x => x <= 0)) {
+    status.textContent = '❌ Cannot find positive coefficients';
+    status.style.color = '#ef4444';
+    return;
+  }
+
+  // =========================
+  // FORMAT KẾT QUẢ
+  // =========================
+
+  const fmt = (arr, off) => {
+    return arr.map((formula, i) => {
+      const v = coeffs[off + i];
+
+      return v === 1
+        ? formula
+        : `${v}${formula}`;
+    }).join(' + ');
+  };
+
+  balancedResult.textContent =
+    `${fmt(left, 0)} = ${fmt(right, left.length)}`;
+
+  resultBox.style.display = 'block';
+
+  status.textContent =
+    '✅ Balanced successfully!';
+
+  status.style.color = '#16a34a';
+}
 function resetAll() {
   document.getElementById('equation').value = '';
   document.getElementById('status').textContent = '';
