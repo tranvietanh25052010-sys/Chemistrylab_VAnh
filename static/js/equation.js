@@ -46,122 +46,6 @@ function balanceEquation() {
   }
 
   const sides = eq.split(/=|→/).map(s => s.trim());
-  if (sides.length !== 2) {
-    status.textContent = '⚠️ Invalid equation format';
-    status.style.color = '#ef4444';
-    return;
-  }
-
-  const left = sides[0].split('+').map(s => s.trim()).filter(Boolean);
-  const right = sides[1].split('+').map(s => s.trim()).filter(Boolean);
-  const all = [...left, ...right];
-  const n = all.length;
-
-  if (n < 2) {
-    status.textContent = '⚠️ Need at least two substances';
-    status.style.color = '#ef4444';
-    return;
-  }
-
-  // Lấy danh sách nguyên tố
-  const elements = new Set();
-  const counts = all.map(f => {
-    const c = parseFormula(f);
-    Object.keys(c).forEach(e => elements.add(e));
-    return c;
-  });
-
-  // Kiểm tra nguyên tố chỉ xuất hiện một vế
-  for (const e of elements) {
-    let l = 0, r = 0;
-    left.forEach((_, i) => l += counts[i][e] || 0);
-    right.forEach((_, i) => r += counts[left.length + i][e] || 0);
-    if (l === 0 || r === 0) {
-      status.textContent = `⚠️ Element ${e} only on one side`;
-      status.style.color = '#ef4444';
-      return;
-    }
-  }
-
-  // Xây hệ phương trình: Σ(coeff[i] * count[i][elem]) = 0
-  const elemList = [...elements];
-  const m = elemList.length;
-  const matrix = Array.from({length: m}, () => Array(n).fill(0));
-
-  for (let r = 0; r < m; r++) {
-    const e = elemList[r];
-    for (let c = 0; c < n; c++) {
-      matrix[r][c] = (counts[c][e] || 0) * (c < left.length ? 1 : -1);
-    }
-  }
-
-  // Thử hệ số từ nhỏ nhất (phương pháp thử chuẩn)
-  let coeffs = null;
-  let found = false;
-
-  for (let last = 1; last <= 200 && !found; last++) {
-    const sol = Array(n - 1).fill(0);
-    const max = Math.pow(last + 1, n - 1);
-
-    for (let mask = 0; mask < max && !found; mask++) {
-      // Chuyển mask thành hệ số nguyên dương
-      let num = mask;
-      for (let i = n - 2; i >= 0; i--) {
-        sol[i] = (num % (last + 1)) + 1;
-        num = Math.floor(num / (last + 1));
-      }
-      sol.push(last); // Hệ số cuối cố định = last
-
-      // Kiểm tra thỏa mãn tất cả phương trình
-      let ok = true;
-      for (let r = 0; r < m && ok; r++) {
-        let sum = 0;
-        for (let c = 0; c < n; c++) sum += matrix[r][c] * sol[c];
-        if (sum !== 0) ok = false;
-      }
-
-      if (ok) {
-        // Rút gọn về ước số chung lớn nhất
-        const g = sol.reduce((a, b) => gcd(a, b));
-        coeffs = sol.map(x => x / g);
-        found = true;
-      }
-    }
-  }
-
-  if (!coeffs) {
-    status.textContent = '❌ Cannot balance this equation';
-    status.style.color = '#ef4444';
-    return;
-  }
-
-  // Định dạng kết quả
-  const fmt = (arr, off) => arr.map((_, i) => {
-    const v = coeffs[off + i];
-    return v === 1 ? all[off + i] : `${v}${all[off + i]}`;
-  }).join(' + ');
-
-  balancedResult.textContent = `${fmt(left, 0)} = ${fmt(right, left.length)}`;
-  resultBox.style.display = 'block';
-  status.textContent = '✅ Balanced successfully!';
-  status.style.color = '#16a34a';
-}
-function balanceEquation() {
-  const eq = document.getElementById('equation').value.trim();
-  const status = document.getElementById('status');
-  const resultBox = document.getElementById('result-box');
-  const balancedResult = document.getElementById('balanced-result');
-
-  resultBox.style.display = 'none';
-  status.textContent = '';
-
-  if (!eq.includes('=') && !eq.includes('→')) {
-    status.textContent = '⚠️ Please separate sides with "=" or "→"';
-    status.style.color = '#ef4444';
-    return;
-  }
-
-  const sides = eq.split(/=|→/).map(s => s.trim());
 
   if (sides.length !== 2) {
     status.textContent = '⚠️ Invalid equation format';
@@ -336,75 +220,67 @@ function balanceEquation() {
   // =========================
   // ĐỔI SANG SỐ NGUYÊN
   // =========================
+// =========================
+// ĐỔI SANG SỐ NGUYÊN
+// =========================
 
-  function gcdInt(a, b) {
-    a = Math.abs(Math.round(a));
-    b = Math.abs(Math.round(b));
+function gcdInt(a, b) {
+  a = Math.abs(Math.round(a));
+  b = Math.abs(Math.round(b));
 
-    while (b !== 0) {
-      [a, b] = [b, a % b];
-    }
-
-    return a;
+  while (b !== 0) {
+    [a, b] = [b, a % b];
   }
 
-  function lcm(a, b) {
-    return Math.abs(a * b) / gcdInt(a, b);
-  }
+  return a;
+}
 
-  // Tìm mẫu số chung
-  function denominator(x) {
-    const s = x.toString();
+// Tìm giá trị nhỏ nhất khác 0
+const nonZero = solution
+  .filter(x => Math.abs(x) > 1e-10)
+  .map(Math.abs);
 
-    if (!s.includes('.')) return 1;
+if (nonZero.length === 0) {
+  status.textContent = '❌ Cannot balance this equation';
+  status.style.color = '#ef4444';
+  return;
+}
 
-    return Math.pow(
-      10,
-      s.split('.')[1].length
-    );
-  }
+const minValue = Math.min(...nonZero);
 
-  let commonDenominator = 1;
+// Chuẩn hóa về số nguyên
+let coeffs = solution.map(x =>
+  Math.round(x / minValue)
+);
 
-  for (const x of solution) {
-    commonDenominator = lcm(
-      commonDenominator,
-      denominator(x)
-    );
-  }
+// Đảm bảo hệ số dương
+const firstNonZero = coeffs.find(x => x !== 0);
 
-  let coeffs = solution.map(x =>
-    Math.round(x * commonDenominator)
-  );
+if (firstNonZero < 0) {
+  coeffs = coeffs.map(x => -x);
+}
 
-  // Đổi dấu nếu cần
-  const firstNonZero = coeffs.find(x => x !== 0);
+// Rút gọn GCD
+let g = Math.abs(coeffs[0]);
 
-  if (firstNonZero < 0) {
-    coeffs = coeffs.map(x => -x);
-  }
+for (let i = 1; i < coeffs.length; i++) {
+  g = gcdInt(g, coeffs[i]);
+}
 
-  // Rút gọn GCD
-  let g = coeffs[0];
+if (g === 0) {
+  status.textContent = '❌ Cannot balance this equation';
+  status.style.color = '#ef4444';
+  return;
+}
 
-  for (let i = 1; i < coeffs.length; i++) {
-    g = gcdInt(g, coeffs[i]);
-  }
+coeffs = coeffs.map(x => Math.round(x / g));
 
-  if (g === 0) {
-    status.textContent = '❌ Cannot balance this equation';
-    status.style.color = '#ef4444';
-    return;
-  }
-
-  coeffs = coeffs.map(x => Math.round(x / g));
-
-  // Kiểm tra hệ số dương
-  if (coeffs.some(x => x <= 0)) {
-    status.textContent = '❌ Cannot find positive coefficients';
-    status.style.color = '#ef4444';
-    return;
-  }
+// Kiểm tra hệ số hợp lệ
+if (coeffs.some(x => x <= 0)) {
+  status.textContent = '❌ Cannot find positive coefficients';
+  status.style.color = '#ef4444';
+  return;
+}
 
   // =========================
   // FORMAT KẾT QUẢ
@@ -430,6 +306,7 @@ function balanceEquation() {
 
   status.style.color = '#16a34a';
 }
+
 function resetAll() {
   document.getElementById('equation').value = '';
   document.getElementById('status').textContent = '';
