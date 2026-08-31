@@ -30,6 +30,42 @@ function gcd(a, b) {
   return a;
 }
 
+// ==========================================
+// HÀM BỔ TRỢ: XỬ LÝ PHÂN SỐ ĐỂ TRÁNH SAI SỐ
+// ==========================================
+class Fraction {
+  constructor(num, den = 1) {
+    if (den === 0) throw new Error("Division by zero");
+    if (den < 0) { num = -num; den = -den; }
+    const g = Fraction.gcd(Math.abs(num), Math.abs(den));
+    this.num = num / g;
+    this.den = den / g;
+  }
+
+  static gcd(a, b) {
+    return b === 0 ? a : Fraction.gcd(b, a % b);
+  }
+
+  add(other) {
+    return new Fraction(this.num * other.den + other.num * this.den, this.den * other.den);
+  }
+
+  sub(other) {
+    return new Fraction(this.num * other.den - other.num * this.den, this.den * other.den);
+  }
+
+  mul(other) {
+    return new Fraction(this.num * other.num, this.den * other.den);
+  }
+
+  div(other) {
+    return new Fraction(this.num * other.den, this.den * other.num);
+  }
+}
+
+// ==========================================
+// HÀM CÂN BẰNG PHƯƠNG TRÌNH CHÍNH (ĐÃ SỬA)
+// ==========================================
 function balanceEquation() {
   const eq = document.getElementById('equation').value.trim();
   const status = document.getElementById('status');
@@ -64,31 +100,20 @@ function balanceEquation() {
     return;
   }
 
-  // =========================
-  // LẤY DANH SÁCH NGUYÊN TỐ
-  // =========================
+  // Lấy danh sách nguyên tố
   const elements = new Set();
-
   const counts = all.map(formula => {
     const c = parseFormula(formula);
-
     Object.keys(c).forEach(e => elements.add(e));
-
     return c;
   });
 
-  // Kiểm tra nguyên tố chỉ xuất hiện một vế
+  // Kiểm tra nguyên tố xuất hiện 1 vế
   for (const e of elements) {
     let leftCount = 0;
     let rightCount = 0;
-
-    for (let i = 0; i < left.length; i++) {
-      leftCount += counts[i][e] || 0;
-    }
-
-    for (let i = 0; i < right.length; i++) {
-      rightCount += counts[left.length + i][e] || 0;
-    }
+    for (let i = 0; i < left.length; i++) leftCount += counts[i][e] || 0;
+    for (let i = 0; i < right.length; i++) rightCount += counts[left.length + i][e] || 0;
 
     if (leftCount === 0 || rightCount === 0) {
       status.textContent = `⚠️ Element ${e} only on one side`;
@@ -97,75 +122,50 @@ function balanceEquation() {
     }
   }
 
-  // =========================
-  // TẠO MA TRẬN
-  // =========================
-
+  // Tạo ma trận
   const elemList = [...elements];
   const m = elemList.length;
 
-  const matrix = Array.from(
-    { length: m },
-    () => Array(n).fill(0)
-  );
+  // CHUYỂN DỮ LIỆU SANG DẠNG PHÂN SỐ (FRACTION)
+  const matrix = Array.from({ length: m }, () => Array(n).fill(new Fraction(0)));
 
   for (let r = 0; r < m; r++) {
     const e = elemList[r];
-
     for (let c = 0; c < n; c++) {
       const amount = counts[c][e] || 0;
-
-      matrix[r][c] =
-        c < left.length ? amount : -amount;
+      matrix[r][c] = new Fraction(c < left.length ? amount : -amount);
     }
   }
 
-  // =========================
-  // GAUSSIAN ELIMINATION
-  // =========================
-
-  const A = matrix.map(row => row.map(Number));
-
+  // GAUSSIAN ELIMINATION BẰNG PHÂN SỐ
+  const A = matrix;
   let pivotRow = 0;
   const pivotCols = [];
 
   for (let col = 0; col < n && pivotRow < m; col++) {
-
-    // Tìm pivot
     let pivot = pivotRow;
-
     for (let r = pivotRow + 1; r < m; r++) {
-      if (Math.abs(A[r][col]) > Math.abs(A[pivot][col])) {
+      if (Math.abs(A[r][col].num) > Math.abs(A[pivot][col].num)) {
         pivot = r;
       }
     }
 
-    // Không có pivot
-    if (Math.abs(A[pivot][col]) < 1e-10) {
-      continue;
-    }
+    if (A[pivot][col].num === 0) continue;
 
-    // Đổi hàng
-    [A[pivotRow], A[pivot]] =
-      [A[pivot], A[pivotRow]];
+    [A[pivotRow], A[pivot]] = [A[pivot], A[pivotRow]];
 
-    // Chuẩn hóa pivot
     const pivotValue = A[pivotRow][col];
-
     for (let c = 0; c < n; c++) {
-      A[pivotRow][c] /= pivotValue;
+      A[pivotRow][c] = A[pivotRow][c].div(pivotValue);
     }
 
-    // Khử toàn bộ cột
     for (let r = 0; r < m; r++) {
       if (r === pivotRow) continue;
-
       const factor = A[r][col];
-
-      if (Math.abs(factor) < 1e-10) continue;
+      if (factor.num === 0) continue;
 
       for (let c = 0; c < n; c++) {
-        A[r][c] -= factor * A[pivotRow][c];
+        A[r][c] = A[r][c].sub(factor.mul(A[pivotRow][c]));
       }
     }
 
@@ -173,18 +173,11 @@ function balanceEquation() {
     pivotRow++;
   }
 
-  // =========================
   // TÌM FREE VARIABLE
-  // =========================
-
   const pivotSet = new Set(pivotCols);
-
   const freeCols = [];
-
   for (let c = 0; c < n; c++) {
-    if (!pivotSet.has(c)) {
-      freeCols.push(c);
-    }
+    if (!pivotSet.has(c)) freeCols.push(c);
   }
 
   if (freeCols.length === 0) {
@@ -193,117 +186,58 @@ function balanceEquation() {
     return;
   }
 
-  // Chọn free variable = 1
-  const solution = Array(n).fill(0);
-  solution[freeCols[0]] = 1;
+  // Gán free variable = 1
+  const solution = Array(n).fill(new Fraction(0));
+  solution[freeCols[0]] = new Fraction(1);
 
-  // =========================
-  // TÍNH CÁC HỆ SỐ PIVOT
-  // =========================
-
+  // Tính các hệ số pivot
   for (let i = pivotCols.length - 1; i >= 0; i--) {
-
     const row = i;
     const col = pivotCols[i];
-
-    let value = 0;
+    let value = new Fraction(0);
 
     for (let c = 0; c < n; c++) {
       if (c === col) continue;
-
-      value += A[row][c] * solution[c];
+      value = value.add(A[row][c].mul(solution[c]));
     }
 
-    solution[col] = -value;
+    solution[col] = new Fraction(0).sub(value);
   }
 
-  // =========================
-  // ĐỔI SANG SỐ NGUYÊN
-  // =========================
-// =========================
-// ĐỔI SANG SỐ NGUYÊN
-// =========================
+  // QUI ĐỒNG MẪU SỐ VỀ SỐ NGUYÊN NGUYÊN BẢN (KHÔNG LÀM TRÒN SAI SỐ)
+  const lcm = (a, b) => (a * b) / Fraction.gcd(a, b);
+  let commonDenom = 1;
+  solution.forEach(frac => {
+    commonDenom = lcm(commonDenom, frac.den);
+  });
 
-function gcdInt(a, b) {
-  a = Math.abs(Math.round(a));
-  b = Math.abs(Math.round(b));
+  let coeffs = solution.map(frac => frac.num * (commonDenom / frac.den));
 
-  while (b !== 0) {
-    [a, b] = [b, a % b];
+  // Kiểm tra hệ số âm
+  if (coeffs.some(x => x <= 0)) {
+    status.textContent = '❌ Cannot find positive coefficients';
+    status.style.color = '#ef4444';
+    return;
   }
 
-  return a;
-}
+  // Rút gọn hệ số bằng BCNN
+  let g = Math.abs(coeffs[0]);
+  for (let i = 1; i < coeffs.length; i++) {
+    g = Fraction.gcd(g, Math.abs(coeffs[i]));
+  }
+  coeffs = coeffs.map(x => x / g);
 
-// Tìm giá trị nhỏ nhất khác 0
-const nonZero = solution
-  .filter(x => Math.abs(x) > 1e-10)
-  .map(Math.abs);
-
-if (nonZero.length === 0) {
-  status.textContent = '❌ Cannot balance this equation';
-  status.style.color = '#ef4444';
-  return;
-}
-
-const minValue = Math.min(...nonZero);
-
-// Chuẩn hóa về số nguyên
-let coeffs = solution.map(x =>
-  Math.round(x / minValue)
-);
-
-// Đảm bảo hệ số dương
-const firstNonZero = coeffs.find(x => x !== 0);
-
-if (firstNonZero < 0) {
-  coeffs = coeffs.map(x => -x);
-}
-
-// Rút gọn GCD
-let g = Math.abs(coeffs[0]);
-
-for (let i = 1; i < coeffs.length; i++) {
-  g = gcdInt(g, coeffs[i]);
-}
-
-if (g === 0) {
-  status.textContent = '❌ Cannot balance this equation';
-  status.style.color = '#ef4444';
-  return;
-}
-
-coeffs = coeffs.map(x => Math.round(x / g));
-
-// Kiểm tra hệ số hợp lệ
-if (coeffs.some(x => x <= 0)) {
-  status.textContent = '❌ Cannot find positive coefficients';
-  status.style.color = '#ef4444';
-  return;
-}
-
-  // =========================
-  // FORMAT KẾT QUẢ
-  // =========================
-
+  // Format kết quả
   const fmt = (arr, off) => {
     return arr.map((formula, i) => {
       const v = coeffs[off + i];
-
-      return v === 1
-        ? formula
-        : `${v}${formula}`;
+      return v === 1 ? formula : `${v}${formula}`;
     }).join(' + ');
   };
 
-  balancedResult.textContent =
-    `${fmt(left, 0)} = ${fmt(right, left.length)}`;
-
+  balancedResult.textContent = `${fmt(left, 0)} = ${fmt(right, left.length)}`;
   resultBox.style.display = 'block';
-
-  status.textContent =
-    '✅ Balanced successfully!';
-
+  status.textContent = '✅ Balanced successfully!';
   status.style.color = '#16a34a';
 }
 
