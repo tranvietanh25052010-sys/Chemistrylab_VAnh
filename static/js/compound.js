@@ -16,24 +16,21 @@ const ATOMIC_MASS = {
   Mc:290,Lv:293,Ts:294,Og:294
 };
 
-// Hàm tiền xử lý chuẩn: Tách dấu chấm và bọc đúng ngoặc cho phần ngậm nước (Ví dụ: CuSO4.5H2O -> CuSO4(H2O)5)
-// Hàm tiền xử lý chuẩn
+// Hàm tiền xử lý hoàn chỉnh
 function preprocessFormula(formula) {
-  // 1. Xóa toàn bộ khoảng trắng thừa
-  formula = formula.replace(/\s+/g, '');
+  // 1. Xóa toàn bộ khoảng trắng
+  let cleaned = formula.replace(/\s+/g, '');
 
-  // 2. Xử lý hệ số ở đầu (Ví dụ: "2H2O" -> "(H2O)2", "2Ca(OH)2" -> "((Ca(OH)2))2")
-  const leadingMatch = formula.match(/^(\d+)(.+)$/);
+  // 2. Xử lý hệ số ở đầu (Ví dụ: "2H2O" -> "(H2O)2", "2CuSO4.5H2O" -> "(CuSO4.5H2O)2")
+  let multiplier = '1';
+  const leadingMatch = cleaned.match(/^(\d+)(.+)$/);
   if (leadingMatch) {
-    const coeff = leadingMatch[1];
-    const rest = leadingMatch[2];
-    formula = `(${rest})${coeff}`;
+    multiplier = leadingMatch[1];
+    cleaned = leadingMatch[2];
   }
 
   // 3. Xử lý muối ngậm nước (Ví dụ: "CuSO4.5H2O" -> "CuSO4(H2O)5")
-  const parts = formula.split(/[\.\*]/);
-  if (parts.length <= 1) return formula;
-
+  const parts = cleaned.split(/[\.\*]/);
   let mainPart = parts[0];
   let hydratePart = '';
 
@@ -47,7 +44,10 @@ function preprocessFormula(formula) {
     }
   }
 
-  return mainPart + hydratePart;
+  const combined = mainPart + hydratePart;
+
+  // Nếu có hệ số ở đầu thì bọc toàn bộ lại
+  return multiplier !== '1' ? `(${combined})${multiplier}` : combined;
 }
 
 function parseFormula(formula) {
@@ -94,7 +94,6 @@ function calculateMass() {
   }
 
   try {
-    // Đã thêm bước tiền xử lý chuẩn xác ở đây
     const processedFormula = preprocessFormula(formula);
     const elemCounts = parseFormula(processedFormula);
     let total = 0;
@@ -110,7 +109,6 @@ function calculateMass() {
 
     totalMass.textContent = `Molar Mass: ${total.toFixed(3)} g/mol`;
 
-    // Hiển thị chi tiết từng nguyên tố
     for (let e in elemCounts) {
       const mass = ATOMIC_MASS[e] * elemCounts[e];
       const percent = ((mass / total) * 100).toFixed(2);
