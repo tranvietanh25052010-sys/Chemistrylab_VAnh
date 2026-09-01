@@ -3,19 +3,6 @@
 // ==========================================
 function parseFormulaWithCharge(formula) {
   let charge = 0;
-  let cleanFormula = formula;
-
-  // 1. Tách điện tích ở cuối công thức (VD: Fe^3+, SO4^2-, Fe3+, H+, e-)
-  const chargeMatch = formula.match(/\^?([0-9]*)([\+\-])$/);
-  if (chargeMatch) {
-    const val = parseInt(chargeMatch[1]) || 1;
-    const sign = chargeMatch[2] === '+' ? 1 : -1;
-    charge = val * sign;
-    cleanFormula = formula.replace(/\^?([0-9]*)([\+\-])$/, '');
-  } else if (formula === 'e' || formula === 'e-') {
-    return { elements: {}, charge: -1 };
-  }function parseFormulaWithCharge(formula) {
-  let charge = 0;
   let cleanFormula = formula.trim();
 
   // 1. Trường hợp electron
@@ -34,33 +21,6 @@ function parseFormulaWithCharge(formula) {
   }
 
   // 3. Parse số nguyên tử bằng Stack
-  const elements = {};
-  const regex = /([A-Z][a-z]?)(\d*)|(\()|(\))(\d*)/g;
-  let stack = [{}];
-  let match;
-
-  while ((match = regex.exec(cleanFormula)) !== null) {
-    if (match[1]) {
-      const elem = match[1];
-      const count = parseInt(match[2]) || 1;
-      const top = stack[stack.length - 1];
-      top[elem] = (top[elem] || 0) + count;
-    } else if (match[3]) {
-      stack.push({});
-    } else if (match[4]) {
-      const group = stack.pop();
-      const mult = parseInt(match[5]) || 1;
-      const top = stack[stack.length - 1];
-      for (let e in group) {
-        top[e] = (top[e] || 0) + group[e] * mult;
-      }
-    }
-  }
-
-  return { elements: stack[0], charge };
-}
-
-  // 2. Parse các nguyên tử bằng Stack
   const elements = {};
   const regex = /([A-Z][a-z]?)(\d*)|(\()|(\))(\d*)/g;
   let stack = [{}];
@@ -217,7 +177,6 @@ function balanceEquation() {
     matrix[m][c] = new Fraction(c < left.length ? charge : -charge);
   }
 
-  // TỔNG SỐ HÀNG MA TRẬN = Nguyên tố + Hàng Điện tích
   const totalRows = m + 1;
 
   // KHỬ GAUSS (GAUSSIAN ELIMINATION)
