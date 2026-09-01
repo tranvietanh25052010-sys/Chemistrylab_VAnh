@@ -1,10 +1,28 @@
-function parseFormula(formula) {
+// ==========================================
+// HÀM PARSE CÔNG THỨC & ĐIỆN TÍCH ION
+// ==========================================
+function parseFormulaWithCharge(formula) {
+  let charge = 0;
+  let cleanFormula = formula;
+
+  // 1. Tách điện tích ở cuối công thức (VD: Fe^3+, SO4^2-, Fe3+, H+, e-)
+  const chargeMatch = formula.match(/\^?([0-9]*)([\+\-])$/);
+  if (chargeMatch) {
+    const val = parseInt(chargeMatch[1]) || 1;
+    const sign = chargeMatch[2] === '+' ? 1 : -1;
+    charge = val * sign;
+    cleanFormula = formula.replace(/\^?([0-9]*)([\+\-])$/, '');
+  } else if (formula === 'e' || formula === 'e-') {
+    return { elements: {}, charge: -1 };
+  }
+
+  // 2. Parse các nguyên tử bằng Stack
   const elements = {};
   const regex = /([A-Z][a-z]?)(\d*)|(\()|(\))(\d*)/g;
   let stack = [{}];
   let match;
 
-  while ((match = regex.exec(formula)) !== null) {
+  while ((match = regex.exec(cleanFormula)) !== null) {
     if (match[1]) {
       const elem = match[1];
       const count = parseInt(match[2]) || 1;
@@ -21,17 +39,43 @@ function parseFormula(formula) {
       }
     }
   }
-  return stack[0];
-}
 
-function gcd(a, b) {
-  a = Math.abs(a); b = Math.abs(b);
-  while (b) { [a, b] = [b, a % b]; }
-  return a;
+  return { elements: stack[0], charge };
 }
 
 // ==========================================
-// HÀM BỔ TRỢ: XỬ LÝ PHÂN SỐ ĐỂ TRÁNH SAI SỐ
+// HÀM TIỀN XỬ LÝ (MUỐI NGẬM NƯỚC & HỆ SỐ ĐẦU)
+// ==========================================
+function preprocessFormula(formula) {
+  let cleaned = formula.replace(/\s+/g, '');
+
+  let multiplier = '1';
+  const leadingMatch = cleaned.match(/^(\d+)(.+)$/);
+  if (leadingMatch) {
+    multiplier = leadingMatch[1];
+    cleaned = leadingMatch[2];
+  }
+
+  const parts = cleaned.split(/[\.\*]/);
+  let mainPart = parts[0];
+  let hydratePart = '';
+
+  for (let i = 1; i < parts.length; i++) {
+    const part = parts[i];
+    const match = part.match(/^(\d*)(.*)$/);
+    if (match) {
+      const coeff = match[1] || '1';
+      const compound = match[2];
+      hydratePart += `(${compound})${coeff}`;
+    }
+  }
+
+  const combined = mainPart + hydratePart;
+  return multiplier !== '1' ? `(${combined})${multiplier}` : combined;
+}
+
+// ==========================================
+// LỚP PHÂN SỐ (FRACTION) TÍNH TOÁN CHÍNH XÁC
 // ==========================================
 class Fraction {
   constructor(num, den = 1) {
@@ -64,7 +108,7 @@ class Fraction {
 }
 
 // ==========================================
-// HÀM CÂN BẰNG PHƯƠNG TRÌNH CHÍNH (ĐÃ SỬA)
+// HÀM CÂN BẰNG CHÍNH (HỖ TRỢ ION & MA TRẬN GAUSS)
 // ==========================================
 function balanceEquation() {
   const eq = document.getElementById('equation').value.trim();
@@ -100,51 +144,46 @@ function balanceEquation() {
     return;
   }
 
-  // Lấy danh sách nguyên tố
+  // Parse chất + điện tích
   const elements = new Set();
-  const counts = all.map(formula => {
-    const c = parseFormula(formula);
-    Object.keys(c).forEach(e => elements.add(e));
-    return c;
+  const parsedList = all.map(formula => {
+    const processed = preprocessFormula(formula);
+    const parsed = parseFormulaWithCharge(processed);
+    Object.keys(parsed.elements).forEach(e => elements.add(e));
+    return parsed;
   });
 
-  // Kiểm tra nguyên tố xuất hiện 1 vế
-  for (const e of elements) {
-    let leftCount = 0;
-    let rightCount = 0;
-    for (let i = 0; i < left.length; i++) leftCount += counts[i][e] || 0;
-    for (let i = 0; i < right.length; i++) rightCount += counts[left.length + i][e] || 0;
-
-    if (leftCount === 0 || rightCount === 0) {
-      status.textContent = `⚠️ Element ${e} only on one side`;
-      status.style.color = '#ef4444';
-      return;
-    }
-  }
-
-  // Tạo ma trận
   const elemList = [...elements];
   const m = elemList.length;
 
-  // CHUYỂN DỮ LIỆU SANG DẠNG PHÂN SỐ (FRACTION)
-  const matrix = Array.from({ length: m }, () => Array(n).fill(new Fraction(0)));
+  // Lập ma trận Gauss (Các hàng nguyên tố + 1 HÀNG BẢO TOÀN ĐIỆN TÍCH)
+  const matrix = Array.from({ length: m + 1 }, () => Array(n).fill(new Fraction(0)));
 
   for (let r = 0; r < m; r++) {
     const e = elemList[r];
     for (let c = 0; c < n; c++) {
-      const amount = counts[c][e] || 0;
+      const amount = parsedList[c].elements[e] || 0;
       matrix[r][c] = new Fraction(c < left.length ? amount : -amount);
     }
   }
 
-  // GAUSSIAN ELIMINATION BẰNG PHÂN SỐ
+  // Hàng cuối cùng: Hàng Bảo toàn điện tích
+  for (let c = 0; c < n; c++) {
+    const charge = parsedList[c].charge;
+    matrix[m][c] = new Fraction(c < left.length ? charge : -charge);
+  }
+
+  // TỔNG SỐ HÀNG MA TRẬN = Nguyên tố + Hàng Điện tích
+  const totalRows = m + 1;
+
+  // KHỬ GAUSS (GAUSSIAN ELIMINATION)
   const A = matrix;
   let pivotRow = 0;
   const pivotCols = [];
 
-  for (let col = 0; col < n && pivotRow < m; col++) {
+  for (let col = 0; col < n && pivotRow < totalRows; col++) {
     let pivot = pivotRow;
-    for (let r = pivotRow + 1; r < m; r++) {
+    for (let r = pivotRow + 1; r < totalRows; r++) {
       if (Math.abs(A[r][col].num) > Math.abs(A[pivot][col].num)) {
         pivot = r;
       }
@@ -159,7 +198,7 @@ function balanceEquation() {
       A[pivotRow][c] = A[pivotRow][c].div(pivotValue);
     }
 
-    for (let r = 0; r < m; r++) {
+    for (let r = 0; r < totalRows; r++) {
       if (r === pivotRow) continue;
       const factor = A[r][col];
       if (factor.num === 0) continue;
@@ -190,7 +229,6 @@ function balanceEquation() {
   const solution = Array(n).fill(new Fraction(0));
   solution[freeCols[0]] = new Fraction(1);
 
-  // Tính các hệ số pivot
   for (let i = pivotCols.length - 1; i >= 0; i--) {
     const row = i;
     const col = pivotCols[i];
@@ -204,7 +242,7 @@ function balanceEquation() {
     solution[col] = new Fraction(0).sub(value);
   }
 
-  // QUI ĐỒNG MẪU SỐ VỀ SỐ NGUYÊN NGUYÊN BẢN (KHÔNG LÀM TRÒN SAI SỐ)
+  // QUI ĐỒNG MẪU SỐ
   const lcm = (a, b) => (a * b) / Fraction.gcd(a, b);
   let commonDenom = 1;
   solution.forEach(frac => {
@@ -213,21 +251,19 @@ function balanceEquation() {
 
   let coeffs = solution.map(frac => frac.num * (commonDenom / frac.den));
 
-  // Kiểm tra hệ số âm
   if (coeffs.some(x => x <= 0)) {
     status.textContent = '❌ Cannot find positive coefficients';
     status.style.color = '#ef4444';
     return;
   }
 
-  // Rút gọn hệ số bằng BCNN
   let g = Math.abs(coeffs[0]);
   for (let i = 1; i < coeffs.length; i++) {
     g = Fraction.gcd(g, Math.abs(coeffs[i]));
   }
   coeffs = coeffs.map(x => x / g);
 
-  // Format kết quả
+  // Format hiển thị
   const fmt = (arr, off) => {
     return arr.map((formula, i) => {
       const v = coeffs[off + i];
