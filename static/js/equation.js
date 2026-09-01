@@ -14,7 +14,51 @@ function parseFormulaWithCharge(formula) {
     cleanFormula = formula.replace(/\^?([0-9]*)([\+\-])$/, '');
   } else if (formula === 'e' || formula === 'e-') {
     return { elements: {}, charge: -1 };
+  }function parseFormulaWithCharge(formula) {
+  let charge = 0;
+  let cleanFormula = formula.trim();
+
+  // 1. Trường hợp electron
+  if (cleanFormula === 'e' || cleanFormula === 'e-') {
+    return { elements: {}, charge: -1 };
   }
+
+  // 2. Tách điện tích dạng: ^3+, ^2-, ^+, ^-, 3+, 2-, +, -
+  const chargeMatch = cleanFormula.match(/[\^]?(\d*)([\+\-])$/);
+  if (chargeMatch) {
+    const val = parseInt(chargeMatch[1]) || 1;
+    const sign = chargeMatch[2] === '+' ? 1 : -1;
+    charge = val * sign;
+    // Bỏ phần điện tích khỏi công thức nguyên tử
+    cleanFormula = cleanFormula.replace(/[\^]?(\d*)([\+\-])$/, '');
+  }
+
+  // 3. Parse số nguyên tử bằng Stack
+  const elements = {};
+  const regex = /([A-Z][a-z]?)(\d*)|(\()|(\))(\d*)/g;
+  let stack = [{}];
+  let match;
+
+  while ((match = regex.exec(cleanFormula)) !== null) {
+    if (match[1]) {
+      const elem = match[1];
+      const count = parseInt(match[2]) || 1;
+      const top = stack[stack.length - 1];
+      top[elem] = (top[elem] || 0) + count;
+    } else if (match[3]) {
+      stack.push({});
+    } else if (match[4]) {
+      const group = stack.pop();
+      const mult = parseInt(match[5]) || 1;
+      const top = stack[stack.length - 1];
+      for (let e in group) {
+        top[e] = (top[e] || 0) + group[e] * mult;
+      }
+    }
+  }
+
+  return { elements: stack[0], charge };
+}
 
   // 2. Parse các nguyên tử bằng Stack
   const elements = {};
