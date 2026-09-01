@@ -16,6 +16,14 @@ const ATOMIC_MASS = {
   Mc:290,Lv:293,Ts:294,Og:294
 };
 
+// Hàm tiền xử lý: Tự động chuyển CuSO4.5H2O hoặc CuSO4*5H2O thành CuSO4(H2O)5
+function preprocessFormula(formula) {
+  return formula.replace(/[\.\*](\d*)([A-Z][a-z0-9\(\)]*)/g, (match, coeff, compound) => {
+    const mult = coeff || '1';
+    return `(${compound})${mult}`;
+  });
+}
+
 function parseFormula(formula) {
   const elements = {};
   const regex = /([A-Z][a-z]?)(\d*)|(\()|(\))(\d*)/g;
@@ -60,7 +68,9 @@ function calculateMass() {
   }
 
   try {
-    const elemCounts = parseFormula(formula);
+    // Thêm đoạn tiền xử lý chuỗi ở đây
+    const processedFormula = preprocessFormula(formula);
+    const elemCounts = parseFormula(processedFormula);
     let total = 0;
 
     for (let e in elemCounts) {
