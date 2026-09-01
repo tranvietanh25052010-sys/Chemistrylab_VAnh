@@ -19,16 +19,18 @@ const ATOMIC_MASS = {
 // Hàm tiền xử lý chuẩn: Tách dấu chấm và bọc đúng ngoặc cho phần ngậm nước (Ví dụ: CuSO4.5H2O -> CuSO4(H2O)5)
 // Hàm tiền xử lý chuẩn
 function preprocessFormula(formula) {
-  // 1. Xử lý khoảng trắng thừa
+  // 1. Xóa toàn bộ khoảng trắng thừa
   formula = formula.replace(/\s+/g, '');
 
-  // 2. Xử lý hệ số đứng ở đầu (ví dụ: "2H2O" -> "(H2O)2")
+  // 2. Xử lý hệ số ở đầu (Ví dụ: "2H2O" -> "(H2O)2", "2Ca(OH)2" -> "((Ca(OH)2))2")
   const leadingMatch = formula.match(/^(\d+)(.+)$/);
   if (leadingMatch) {
-    formula = `(${leadingMatch[2]})${leadingMatch[1]}`;
+    const coeff = leadingMatch[1];
+    const rest = leadingMatch[2];
+    formula = `(${rest})${coeff}`;
   }
 
-  // 3. Xử lý muối ngậm nước (ví dụ: "CuSO4.5H2O" -> "CuSO4(H2O)5")
+  // 3. Xử lý muối ngậm nước (Ví dụ: "CuSO4.5H2O" -> "CuSO4(H2O)5")
   const parts = formula.split(/[\.\*]/);
   if (parts.length <= 1) return formula;
 
