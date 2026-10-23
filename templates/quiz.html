@@ -12,12 +12,12 @@ Chemistry Quiz
   <!-- MÀN HÌNH CHỌN CẤP ĐỘ -->
   <div id="level-screen" class="quiz-box">
     <h2>Chọn Cấp Độ Thử Thách</h2>
-    <p style="margin-bottom: 25px; color: var(--text-muted);">Chọn mức độ phù hợp để bắt đầu 10 câu hỏi ngẫu nhiên</p>
+    <p style="margin-bottom: 25px; color: var(--text-muted);">Select an appropriate level to begin 10 random questions</p>
     
     <div style="display: flex; flex-direction: column; gap: 15px; max-width: 400px; margin: 0 auto;">
-      <button onclick="selectLevel('beginner')" class="quiz-btn" style="background: var(--success);">🌱 Dễ (Beginner)</button>
-      <button onclick="selectLevel('intermediate')" class="quiz-btn" style="background: var(--warning);">🔥 Trung bình (Intermediate)</button>
-      <button onclick="selectLevel('advanced')" class="quiz-btn" style="background: var(--danger);">💎 Khó (Advanced)</button>
+      <button onclick="selectLevel('beginner')" class="quiz-btn" style="background: var(--success);">Beginner</button>
+      <button onclick="selectLevel('intermediate')" class="quiz-btn" style="background: var(--warning);">Intermediate</button>
+      <button onclick="selectLevel('advanced')" class="quiz-btn" style="background: var(--danger);">Advanced</button>
     </div>
   </div>
 
@@ -39,7 +39,7 @@ Chemistry Quiz
       <span id="final-score"></span>
     </div>
     <p id="comment" style="font-size: 18px; color: var(--text-soft); margin-bottom: 25px;"></p>
-    <button onclick="resetQuiz()" class="quiz-btn">Chọn Cấp Độ Khác</button>
+    <button onclick="resetQuiz()" class="quiz-btn">Select a Different Level</button>
   </div>
 </section>
 
@@ -54,7 +54,7 @@ function selectLevel(level) {
   questions = getQuestionsByLevel(level, 10);
   
   if (questions.length === 0) {
-    alert("Chưa có câu hỏi cho cấp độ này, hãy kiểm tra lại file questions.js nhé!");
+    alert("There are no questions for this level; please check the questions.js file!");
     return;
   }
 
@@ -113,10 +113,10 @@ function showResult() {
   document.getElementById('final-score').textContent = `${score} / ${questions.length}`;
   
   let comment;
-  if(percent >= 90) comment = "🌟 Xuất sắc! Bạn là một bậc thầy Hóa học thực thụ!";
-  else if(percent >= 70) comment = "👍 Làm tốt lắm! Kiến thức rất vững vàng!";
-  else if(percent >= 50) comment = "🙂 Cố gắng lên nhé! Ôn tập thêm một chút là hoàn hảo!";
-  else comment = "💪 Đừng nản lòng! Hãy thử lại để đạt kết quả cao hơn nha!";
+  if(percent >= 90) comment = "🌟 Excellent! You are a true Chemistry master!";
+  else if(percent >= 70) comment = "👍 Well done! Your knowledge is very solid!";
+  else if(percent >= 50) comment = "🙂 Keep it up! Just a little more review and it’ll be perfect!";
+  else comment = "💪 Don’t get discouraged! Give it another try to achieve a better result!";
   
   document.getElementById('comment').textContent = comment;
 }
