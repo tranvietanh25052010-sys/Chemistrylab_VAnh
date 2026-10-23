@@ -11,35 +11,35 @@ Chemistry Quiz
 
   <!-- MÀN HÌNH CHỌN CẤP ĐỘ -->
   <div id="level-screen" class="quiz-box">
-    <h2>Select Difficulty</h2>
-    <p>Choose a level to start your 10-question challenge</p>
+    <h2>Chọn Cấp Độ Thử Thách</h2>
+    <p style="margin-bottom: 25px; color: var(--text-muted);">Chọn mức độ phù hợp để bắt đầu 10 câu hỏi ngẫu nhiên</p>
     
-    <div class="level-buttons">
-      <button onclick="selectLevel('beginner')" class="quiz-btn">🌱 Beginner (Cơ bản)</button>
-      <button onclick="selectLevel('intermediate')" class="quiz-btn">🔥 Intermediate (Trung bình)</button>
-      <button onclick="selectLevel('advanced')" class="quiz-btn">💎 Advanced (Nâng cao)</button>
+    <div style="display: flex; flex-direction: column; gap: 15px; max-width: 400px; margin: 0 auto;">
+      <button onclick="selectLevel('beginner')" class="quiz-btn" style="background: var(--success);">🌱 Dễ (Beginner)</button>
+      <button onclick="selectLevel('intermediate')" class="quiz-btn" style="background: var(--warning);">🔥 Trung bình (Intermediate)</button>
+      <button onclick="selectLevel('advanced')" class="quiz-btn" style="background: var(--danger);">💎 Khó (Advanced)</button>
     </div>
   </div>
 
   <!-- MÀN HÌNH LÀM QUIZ -->
-  <div id="quiz-screen" class="quiz-box" style="display:none;">
-    <div class="quiz-header">
+  <div id="quiz-screen" class="quiz-box" style="display:none; text-align: left;">
+    <div class="quiz-header" style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: 700; color: var(--primary);">
       <span id="q-count">Question 1 / 10</span>
       <span id="score">Score: 0</span>
     </div>
-    <h3 id="question"></h3>
-    <div id="options" class="options"></div>
-    <button id="next-btn" onclick="nextQuestion()" style="display:none;" class="quiz-btn">Next →</button>
+    <h3 id="question" class="quiz-question"></h3>
+    <div id="options" class="options" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px;"></div>
+    <button id="next-btn" onclick="nextQuestion()" style="display:none; width: 100%;" class="quiz-btn">Next →</button>
   </div>
 
   <!-- MÀN HÌNH KẾT QUẢ -->
   <div id="result-screen" class="quiz-box" style="display:none;">
     <h2>Quiz Complete!</h2>
-    <div class="final-score">
+    <div class="final-score" style="font-size: 48px; font-weight: 800; color: var(--primary); margin: 20px 0;">
       <span id="final-score"></span>
     </div>
-    <p id="comment"></p>
-    <button onclick="resetQuiz()" class="quiz-btn">Choose Another Level</button>
+    <p id="comment" style="font-size: 18px; color: var(--text-soft); margin-bottom: 25px;"></p>
+    <button onclick="resetQuiz()" class="quiz-btn">Chọn Cấp Độ Khác</button>
   </div>
 </section>
 
@@ -50,7 +50,7 @@ let currentQ = 0;
 let score = 0;
 
 function selectLevel(level) {
-  // Lấy 10 câu hỏi theo level từ file questions.js
+  // Gọi hàm lấy câu hỏi theo cấp độ từ questions.js
   questions = getQuestionsByLevel(level, 10);
   
   if (questions.length === 0) {
@@ -61,7 +61,6 @@ function selectLevel(level) {
   currentQ = 0;
   score = 0;
 
-  // Ẩn màn hình chọn level, hiện màn hình làm quiz
   document.getElementById('level-screen').style.display = 'none';
   document.getElementById('quiz-screen').style.display = 'block';
   showQuestion();
@@ -72,23 +71,30 @@ function showQuestion() {
   document.getElementById('q-count').textContent = `Question ${currentQ+1} / ${questions.length}`;
   document.getElementById('score').textContent = `Score: ${score}`;
   document.getElementById('question').textContent = q.q;
-  document.getElementById('options').innerHTML = '';
+  
+  const optionsContainer = document.getElementById('options');
+  optionsContainer.innerHTML = '';
   document.getElementById('next-btn').style.display = 'none';
 
   q.options.forEach((opt, idx) => {
     const btn = document.createElement('div');
-    btn.className = 'option';
+    btn.className = 'option'; // Khớp với class đã được định nghĩa sẵn trong CSS chung của bạn
     btn.textContent = opt;
     btn.onclick = () => selectAnswer(idx, q.answer);
-    document.getElementById('options').appendChild(btn);
+    optionsContainer.appendChild(btn);
   });
 }
 
 function selectAnswer(selected, correct) {
   const opts = document.querySelectorAll('.option');
   opts.forEach(o => o.classList.add('disabled'));
+  
+  // Tô màu đáp án đúng và sai dựa vào class .correct và .wrong có sẵn trong CSS của bạn
   opts[correct].classList.add('correct');
-  if(selected !== correct) opts[selected].classList.add('wrong');
+  if(selected !== correct) {
+    opts[selected].classList.add('wrong');
+  }
+  
   if(selected === correct) score++;
   document.getElementById('score').textContent = `Score: ${score}`;
   document.getElementById('next-btn').style.display = 'block';
@@ -107,10 +113,10 @@ function showResult() {
   document.getElementById('final-score').textContent = `${score} / ${questions.length}`;
   
   let comment;
-  if(percent >= 90) comment = "🌟 Excellent! You're a chemistry pro!";
-  else if(percent >= 70) comment = "👍 Great job! Solid knowledge!";
-  else if(percent >= 50) comment = "🙂 Good effort! Keep practicing!";
-  else comment = "💪 Don't give up! Review and try again!";
+  if(percent >= 90) comment = "🌟 Xuất sắc! Bạn là một bậc thầy Hóa học thực thụ!";
+  else if(percent >= 70) comment = "👍 Làm tốt lắm! Kiến thức rất vững vàng!";
+  else if(percent >= 50) comment = "🙂 Cố gắng lên nhé! Ôn tập thêm một chút là hoàn hảo!";
+  else comment = "💪 Đừng nản lòng! Hãy thử lại để đạt kết quả cao hơn nha!";
   
   document.getElementById('comment').textContent = comment;
 }
